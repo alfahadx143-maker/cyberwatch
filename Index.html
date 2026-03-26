@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberWatch — منصة الأمن السيبراني</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Tajawal:wght@400;500;700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #00ff88; --green-dim: rgba(0,255,136,0.12);
+    --green-border: rgba(0,255,136,0.2); --bg: #080c10;
+    --card: rgba(12,18,24,0.9); --text: #c8d8e8; --muted: #3a5a4a;
+    --red: #ff2d2d; --orange: #ff8c00; --yellow: #ffd700; --blue: #00aaff;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Tajawal', sans-serif; min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 0; }
+  body::after { content: ''; position: fixed; top: -2px; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--green), transparent); animation: scanline 4s linear infinite; z-index: 999; opacity: 0.5; }
+  @keyframes scanline { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.6; } 100% { transform: translateY(100vh); opacity: 0; } }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+  @keyframes glow { 0%,100%{box-shadow:0 0 6px rgba(0,255,136,0.3);} 50%{box-shadow:0 0 16px rgba(0,255,136,0.6);} }
+  .layout { display: flex; min-height: 100vh; position: relative; z-index: 1; }
+  .sidebar { width: 220px; min-height: 100vh; background: rgba(8,12,16,0.97); border-left: 1px solid var(--green-border); display: flex; flex-direction: column; position: fixed; right: 0; top: 0; bottom: 0; z-index: 100; }
+  .logo { padding: 24px 20px 18px; border-bottom: 1px solid rgba(0,255,136,0.1); }
+  .logo-inner { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+  .logo-icon { width: 34px; height: 34px; border: 2px solid var(--green); display: flex; align-items: center; justify-content: center; color: var(--green); font-size: 16px; box-shadow: 0 0 14px rgba(0,255,136,0.4); animation: glow 3s ease-in-out infinite; }
+  .logo-name { color: var(--green); font-size: 15px; font-weight: 700; letter-spacing: 3px; }
+  .logo-sub { font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+  .sidebar-time { padding: 12px 20px; border-bottom: 1px solid rgba(0,255,136,0.08); }
+  .clock { color: var(--green); font-size: 18px; letter-spacing: 3px; }
+  .date-str { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  nav { flex: 1; padding: 10px 8px; }
+  .nav-btn { width: 100%; padding: 10px 12px; margin-bottom: 3px; background: transparent; border: none; border-right: 2px solid transparent; color: #4a6a5a; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 13px; font-family: 'Tajawal', sans-serif; text-align: right; transition: all 0.2s; }
+  .nav-btn:hover { background: rgba(0,255,136,0.08); color: var(--green); }
+  .nav-btn.active { background: rgba(0,255,136,0.12); border-right-color: var(--green); color: var(--green); }
+  .nav-icon { font-size: 16px; min-width: 22px; text-align: center; }
+  .odoo-status { padding: 14px 18px; border-top: 1px solid rgba(0,255,136,0.1); }
+  .odoo-label { font-size: 9px; color: var(--muted); letter-spacing: 2px; margin-bottom: 8px; }
+  .odoo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; box-shadow: 0 0 8px var(--green); display: inline-block; margin-left: 6px; }
+  .odoo-connected { font-size: 12px; color: var(--green); }
+  .main { margin-right: 220px; padding: 24px 28px; flex: 1; }
+  .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+  .page-title { font-size: 22px; font-weight: 700; color: #e0f0e8; letter-spacing: 1px; }
+  .page-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .threat-badge { padding: 6px 14px; background: rgba(255,45,45,0.1); border: 1px solid rgba(255,45,45,0.3); font-size: 11px; color: #ff6b6b; letter-spacing: 1px; }
+  .card { background: var(--card); border: 1px solid var(--green-border); transition: border-color 0.2s; }
+  .card:hover { border-color: rgba(0,255,136,0.35); }
+  .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 24px; }
+  .stat-card { padding: 20px; }
+  .stat-value { font-size: 30px; font-weight: 700; }
+  .stat-label { font-size: 12px; color: #5a7a6a; margin-top: 4px; }
+  .stat-change { font-size: 11px; margin-top: 6px; opacity: 0.7; }
+  .two-col { display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; }
+  .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .section-title { font-size: 12px; color: #8ab0a0; letter-spacing: 2px; }
+  .section-link { font-size: 11px; color: var(--green); cursor: pointer; }
+  .cve-row { padding: 10px 8px; border-bottom: 1px solid rgba(0,255,136,0.06); display: flex; align-items: center; gap: 12px; cursor: pointer; transition: background 0.15s; }
+  .cve-row:hover { background: rgba(0,255,136,0.04); }
+  .cve-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .cve-title { font-size: 12px; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+  .cve-id { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .cve-badge { font-size: 10px; padding: 2px 8px; flex-shrink: 0; }
+  .prog-item { margin-bottom: 12px; }
+  .prog-label { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px; }
+  .prog-track { height: 4px; background: rgba(0,255,136,0.08); overflow: hidden; }
+  .prog-fill { height: 100%; transition: width 1.2s ease; }
+  .circle-wrap { display: flex; justify-content: center; margin-bottom: 18px; }
+  .news-item { background: var(--card); border: 1px solid rgba(0,255,136,0.1); padding: 18px 20px; margin-bottom: 12px; cursor: pointer; display: flex; align-items: flex-start; gap: 16px; transition: all 0.2s; }
+  .news-item:hover { border-color: rgba(0,255,136,0.3); }
+  .news-bar { width: 4px; height: 44px; flex-shrink: 0; }
+  .news-title { font-size: 14px; color: #d0e8d8; margin-bottom: 8px; line-height: 1.5; }
+  .news-meta { display: flex; gap: 10px; align-items: center; font-size: 10px; }
+  .news-source { color: var(--muted); }
+  .news-tag { padding: 2px 8px; font-size: 10px; }
+  .lessons-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
+  .lesson-card { padding: 20px; cursor: pointer; }
+  .lesson-module { font-size: 10px; color: var(--muted); margin-bottom: 6px; letter-spacing: 1px; }
+  .lesson-title { font-size: 14px; color: #d0e8d8; }
+  .lesson-icon { width: 40px; height: 40px; border: 2px solid rgba(0,255,136,0.3); display: flex; align-items: center; justify-content: center; font-size: 14px; color: #5a7a6a; flex-shrink: 0; }
+  .lesson-footer { display: flex; justify-content: space-between; font-size: 11px; }
+  .progress-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .bars-chart { display: flex; align-items: flex-end; gap: 8px; height: 110px; margin-bottom: 10px; }
+  .bar-col { flex: 1; display: flex; align-items: flex-end; }
+  .bar-fill { width: 100%; min-height: 4px; background: linear-gradient(180deg, var(--green), #004422); box-shadow: 0 0 6px rgba(0,255,136,0.3); }
+  .bars-days { display: flex; justify-content: space-between; font-size: 9px; color: #2a4a3a; }
+  .filter-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .filter-btn { padding: 6px 16px; background: transparent; border: 1px solid rgba(0,255,136,0.2); color: #5a7a6a; cursor: pointer; font-size: 11px; letter-spacing: 1px; transition: all 0.2s; }
+  .filter-btn:hover, .filter-btn.active { background: rgba(0,255,136,0.15); border-color: var(--green); color: var(--green); }
+  .cve-table-header { display: grid; grid-template-columns: 1.5fr 3fr 1fr 0.8fr 1fr; gap: 12px; padding: 12px 20px; border-bottom: 1px solid rgba(0,255,136,0.12); font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+  .cve-table-row { display: grid; grid-template-columns: 1.5fr 3fr 1fr 0.8fr 1fr; gap: 12px; padding: 13px 20px; border-bottom: 1px solid rgba(0,255,136,0.05); align-items: center; cursor: pointer; transition: background 0.15s; }
+  .cve-table-row:hover { background: rgba(0,255,136,0.04); }
+  .page { display: none; animation: fadeIn 0.3s ease; }
+  .page.active { display: block; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: rgba(0,255,136,0.2); border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-inner"><div class="logo-icon">⬡</div><span class="logo-name">CYBERWATCH</span></div>
+      <div class="logo-sub">منصة الأمن السيبراني</div>
+    </div>
+    <div class="sidebar-time">
+      <div class="clock" id="clock">00:00:00</div>
+      <div class="date-str" id="dateStr">—</div>
+    </div>
+    <nav>
+      <button class="nav-btn active" onclick="showPage('dashboard',this)"><span class="nav-icon">◈</span> لوحة التحكم</button>
+      <button class="nav-btn" onclick="showPage('cve',this)"><span class="nav-icon">⚠</span> الثغرات CVE</button>
+      <button class="nav-btn" onclick="showPage('news',this)"><span class="nav-icon">◉</span> الأخبار</button>
+      <button class="nav-btn" onclick="showPage('lessons',this)"><span class="nav-icon">▣</span> الدروس</button>
+      <button class="nav-btn" onclick="showPage('progress',this)"><span class="nav-icon">◐</span> التقدم</button>
+    </nav>
+    <div class="odoo-status">
+      <div class="odoo-label">ODOO SYNC</div>
+      <span class="odoo-dot"></span><span class="odoo-connected">متصل — v17.0</span>
+    </div>
+  </aside>
+  <main class="main">
+    <div id="page-dashboard" class="page active">
+      <div class="page-header">
+        <div><div class="page-title">لوحة التحكم الرئيسية</div><div class="page-sub">● تحديث مباشر — <span id="syncTime">—</span></div></div>
+        <div class="threat-badge">⚡ 3 تهديدات نشطة</div>
+      </div>
+      <div class="stats-grid">
+        <div class="card stat-card"><div class="stat-value" style="color:#ff6b6b">127</div><div class="stat-label">ثغرات اليوم</div><div class="stat-change" style="color:#ff6b6b">+12 من أمس</div></div>
+        <div class="card stat-card"><div class="stat-value" style="color:#ff2d2d">8</div><div class="stat-label">تهديدات حرجة</div><div class="stat-change" style="color:#ff2d2d">+3 جديدة</div></div>
+        <div class="card stat-card"><div class="stat-value" style="color:var(--green)">12</div><div class="stat-label">دروس مكتملة</div><div class="stat-change" style="color:var(--green)">من 30 درس</div></div>
+        <div class="card stat-card"><div class="stat-value" style="color:var(--yellow)">2,840</div><div class="stat-label">نقاط الخبرة</div><div class="stat-change" style="color:var(--yellow)">+120 اليوم</div></div>
+      </div>
+      <div class="two-col">
+        <div class="card" style="padding:20px">
+          <div class="section-header"><span class="section-title">أحدث الثغرات</span><span class="section-link" onclick="showPage('cve',document.querySelectorAll('.nav-btn')[1])">عرض الكل ←</span></div>
+          <div id="cve-mini"></div>
+        </div>
+        <div class="card" style="padding:20px">
+          <div class="section-header"><span class="section-title">تقدمك في Odoo</span><span style="font-size:20px;color:var(--green);font-weight:bold">47%</span></div>
+          <div class="circle-wrap">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,255,136,0.1)" stroke-width="8"/>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="var(--green)" stroke-width="8" stroke-dasharray="118.4 251.3" stroke-linecap="round" transform="rotate(-90 50 50)" style="filter:drop-shadow(0 0 6px rgba(0,255,136,0.5))"/>
+              <text x="50" y="55" text-anchor="middle" fill="var(--green)" font-size="18" font-weight="bold">47%</text>
+            </svg>
+          </div>
+          <div id="prog-mini"></div>
+        </div>
+      </div>
+    </div>
+    <div id="page-cve" class="page">
+      <div class="page-header"><div><div class="page-title">قاعدة بيانات الثغرات</div><div class="page-sub">● NVD Feed</div></div><div class="threat-badge">127 ثغرة هذا الأسبوع</div></div>
+      <div class="filter-row">
+        <button class="filter-btn active" onclick="filterCVE('ALL',this)">الكل</button>
+        <button class="filter-btn" onclick="filterCVE('CRITICAL',this)">CRITICAL</button>
+        <button class="filter-btn" onclick="filterCVE('HIGH',this)">HIGH</button>
+        <button class="filter-btn" onclick="filterCVE('MEDIUM',this)">MEDIUM</button>
+        <button class="filter-btn" onclick="filterCVE('LOW',this)">LOW</button>
+      </div>
+      <div class="card"><div class="cve-table-header"><span>معرف الثغرة</span><span>الوصف</span><span>التصنيف</span><span>الدرجة</span><span>التاريخ</span></div><div id="cve-table"></div></div>
+    </div>
+    <div id="page-news" class="page">
+      <div class="page-header"><div><div class="page-title">أخبار الأمن السيبراني</div><div class="page-sub">● مصادر موثوقة</div></div></div>
+      <div id="news-list"></div>
+    </div>
+    <div id="page-lessons" class="page">
+      <div class="page-header"><div><div class="page-title">مكتبة الدروس</div><div class="page-sub">● مزامنة مع Odoo LMS</div></div></div>
+      <div class="lessons-grid" id="lessons-grid"></div>
+    </div>
+    <div id="page-progress" class="page">
+      <div class="page-header"><div><div class="page-title">تقدمك التعليمي</div><div class="page-sub">● بيانات من Odoo</div></div></div>
+      <div class="progress-grid">
+        <div class="card" style="padding:24px"><div class="section-title" style="margin-bottom:20px">إحصائيات Odoo</div><div id="odoo-stats"></div></div>
+        <div class="card" style="padding:24px"><div class="section-title" style="margin-bottom:20px">نشاط هذا الأسبوع</div><div class="bars-chart" id="week-chart"></div><div class="bars-days"><span>أحد</span><span>اثن</span><span>ثلا</span><span>أرب</span><span>خمي</span><span>جمع</span><span>سبت</span></div></div>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+const cves=[{id:"CVE-2025-1234",severity:"CRITICAL",score:9.8,title:"Remote Code Execution in OpenSSL",date:"2025-03-24",cat:"RCE"},{id:"CVE-2025-5678",severity:"HIGH",score:8.1,title:"SQL Injection in Apache HTTP Server",date:"2025-03-23",cat:"SQLi"},{id:"CVE-2025-9012",severity:"MEDIUM",score:6.5,title:"XSS Vulnerability in WordPress Plugin",date:"2025-03-22",cat:"XSS"},{id:"CVE-2025-3456",severity:"CRITICAL",score:9.1,title:"Privilege Escalation in Linux Kernel",date:"2025-03-21",cat:"Priv-Esc"},{id:"CVE-2025-7890",severity:"HIGH",score:7.8,title:"Buffer Overflow in Nginx",date:"2025-03-20",cat:"BoF"},{id:"CVE-2025-2233",severity:"LOW",score:3.2,title:"Information Disclosure in jQuery",date:"2025-03-19",cat:"Info Disc"}];
+const sevColor={CRITICAL:{bg:"rgba(255,45,45,0.12)",border:"#ff2d2d",text:"#ff6b6b",dot:"#ff2d2d"},HIGH:{bg:"rgba(255,140,0,0.12)",border:"#ff8c00",text:"#ffb347",dot:"#ff8c00"},MEDIUM:{bg:"rgba(255,215,0,0.12)",border:"#ffd700",text:"#ffd700",dot:"#ffd700"},LOW:{bg:"rgba(0,255,136,0.12)",border:"#00ff88",text:"#00ff88",dot:"#00ff88"}};
+const news=[{title:"مجموعة Lazarus تستهدف البنوك الآسيوية بحملة تصيد جديدة",source:"Krebs on Security",time:"منذ ساعتين",tag:"APT",color:"#9b59b6"},{title:"ثغرة Zero-Day في Microsoft Exchange تُستغل بشكل نشط",source:"The Hacker News",time:"منذ 5 ساعات",tag:"Zero-Day",color:"#e74c3c"},{title:"اكتشاف برمجية Ransomware جديدة تستهدف قطاع الصحة",source:"BleepingComputer",time:"منذ 8 ساعات",tag:"Ransomware",color:"#e67e22"},{title:"CISA تُصدر تحذيراً بشأن ثغرات في أنظمة ICS الصناعية",source:"CISA",time:"منذ 12 ساعة",tag:"ICS",color:"#3498db"},{title:"تسريب بيانات يطال 50 مليون مستخدم",source:"SecurityWeek",time:"منذ يوم",tag:"Breach",color:"#00ff88"}];
+const lessons=[{title:"مقدمة في اختبار الاختراق",prog:100,mod:"Penetration Testing"},{title:"تقنيات SQL Injection",prog:75,mod:"Web Exploitation"},{title:"تحليل البرمجيات الخبيثة",prog:40,mod:"Malware Analysis"},{title:"أمن الشبكات المتقدم",prog:20,mod:"Network Security"},{title:"تشفير البيانات",prog:0,mod:"Cryptography"},{title:"هندسة الأمان العكسي",prog:0,mod:"Reverse Engineering"}];
+const odooStats=[{label:"الدروس المكتملة",val:12,total:30,color:"var(--green)"},{label:"ساعات التعلم",val:48,total:120,color:"var(--blue)"},{label:"التحديات المحلولة",val:7,total:25,color:"var(--yellow)"},{label:"شهادات مكتسبة",val:2,total:8,color:"#9b59b6"}];
+const weekData=[40,70,55,90,30,80,65];
+function renderAll(){
+  document.getElementById('cve-mini').innerHTML=cves.slice(0,4).map(c=>{const s=sevColor[c.severity];return`<div class="cve-row"><div class="cve-dot" style="background:${s.dot}"></div><div style="flex:1;min-width:0"><div class="cve-title">${c.title}</div><div class="cve-id">${c.id}</div></div><div class="cve-badge" style="background:${s.bg};border:1px solid ${s.border};color:${s.text}">${c.score}</div></div>`;}).join('');
+  document.getElementById('prog-mini').innerHTML=lessons.slice(0,3).map(l=>`<div class="prog-item"><div class="prog-label"><span style="color:#5a7a6a">${l.title}</span><span style="color:${l.prog===100?'var(--green)':'#8ab0a0'}">${l.prog}%</span></div><div class="prog-track"><div class="prog-fill" style="width:${l.prog}%;background:${l.prog===100?'var(--green)':'linear-gradient(90deg,#00ff88,#00cc44)'}"></div></div></div>`).join('');
+  document.getElementById('cve-table').innerHTML=cves.map(c=>{const s=sevColor[c.severity];return`<div class="cve-table-row"><span style="color:var(--green);font-size:12px">${c.id}</span><span style="font-size:12px">${c.title}</span><span style="font-size:11px;color:#8ab0a0">${c.cat}</span><span style="font-weight:bold;color:${s.text}">${c.score}</span><span style="font-size:11px;color:var(--muted)">${c.date}</span></div>`;}).join('');
+  document.getElementById('news-list').innerHTML=news.map(n=>`<div class="news-item"><div class="news-bar" style="background:${n.color}"></div><div style="flex:1"><div class="news-title">${n.title}</div><div class="news-meta"><span class="news-source">${n.source}</span><span>${n.time}</span><span class="news-tag" style="background:${n.color}22;border:1px solid ${n.color}55;color:${n.color}">${n.tag}</span></div></div></div>`).join('');
+  document.getElementById('lessons-grid').innerHTML=lessons.map(l=>`<div class="card lesson-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px"><div><div class="lesson-module">${l.mod}</div><div class="lesson-title">${l.title}</div></div><div class="lesson-icon" style="border-color:${l.prog===100?'var(--green)':'rgba(0,255,136,0.25)'};color:${l.prog===100?'var(--green)':'#5a7a6a'}">${l.prog===100?'✓':l.prog===0?'○':'◐'}</div></div><div class="prog-track" style="margin-bottom:10px;height:4px"><div class="prog-fill" style="width:${l.prog}%;background:linear-gradient(90deg,#00ff88,#00cc44)"></div></div><div class="lesson-footer"><span style="color:var(--muted)">التقدم: ${l.prog}%</span><span style="color:${l.prog===0?'var(--yellow)':l.prog===100?'var(--green)':'var(--blue)'}">${l.prog===0?'ابدأ':l.prog===100?'مراجعة':'تابع'} →</span></div></div>`).join('');
+  document.getElementById('odoo-stats').innerHTML=odooStats.map(s=>`<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span style="color:#8ab0a0">${s.label}</span><span style="color:${s.color}">${s.val} / ${s.total}</span></div><div class="prog-track" style="height:6px"><div class="prog-fill" style="width:${Math.round(s.val/s.total*100)}%;background:${s.color}"></div></div></div>`).join('');
+  const max=Math.max(...weekData);
+  document.getElementById('week-chart').innerHTML=weekData.map(h=>`<div class="bar-col"><div class="bar-fill" style="height:${Math.round(h/max*100)}%"></div></div>`).join('');
+}
+function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+id).classList.add('active');if(btn)btn.classList.add('active');}
+function filterCVE(sev,btn){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.cve-table-row').forEach((row,i)=>{row.style.display=(sev==='ALL'||cves[i].severity===sev)?'grid':'none';});}
+function updateClock(){const now=new Date();document.getElementById('clock').textContent=now.toLocaleTimeString('ar',{hour12:false});document.getElementById('dateStr').textContent=now.toLocaleDateString('ar-SA');document.getElementById('syncTime').textContent=now.toLocaleTimeString('ar',{hour12:false});}
+setInterval(updateClock,1000);updateClock();renderAll();
+</script>
+</body>
+</html>
