@@ -17,6 +17,10 @@
   @keyframes skullPulse { 0%,100%{opacity:0.12;} 50%{opacity:0.2;} }
   @keyframes glow { 0%,100%{box-shadow:0 0 6px rgba(255,45,45,0.3);} 50%{box-shadow:0 0 16px rgba(255,45,45,0.6);} }
   @keyframes shake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-8px);} 75%{transform:translateX(8px);} }
+  @keyframes floatSkull { 0%,100%{transform:translateY(0) rotate(-2deg);} 50%{transform:translateY(-18px) rotate(2deg);} }
+  @keyframes glowRed { 0%,100%{filter:drop-shadow(0 0 20px rgba(255,45,45,0.4));} 50%{filter:drop-shadow(0 0 50px rgba(255,45,45,0.9));} }
+  @keyframes typewriter { from{width:0;} to{width:100%;} }
+  @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
   .login-screen { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; }
   .login-box { background: rgba(12,18,24,0.95); border: 1px solid rgba(255,45,45,0.3); padding: 40px; width: 380px; text-align: center; box-shadow: 0 0 40px rgba(255,45,45,0.1); }
   .login-skull { font-size: 60px; margin-bottom: 16px; }
@@ -26,7 +30,6 @@
   .login-input:focus { border-color: var(--green); box-shadow: 0 0 10px rgba(0,255,136,0.2); }
   .login-btn { width: 100%; padding: 14px; background: rgba(0,255,136,0.15); border: 2px solid var(--green); color: var(--green); font-family: 'Share Tech Mono',monospace; font-size: 15px; letter-spacing: 2px; cursor: pointer; transition: all 0.2s; display: block; }
   .login-btn:hover { background: rgba(0,255,136,0.3); }
-  .login-btn:active { background: rgba(0,255,136,0.4); }
   .login-error { color: #ff6b6b; font-size: 12px; margin-top: 10px; font-family: 'Share Tech Mono',monospace; display: none; }
   .layout { display: flex; min-height: 100vh; position: relative; z-index: 1; }
   .sidebar { width: 220px; min-height: 100vh; background: rgba(8,12,16,0.97); border-left: 1px solid var(--green-border); display: flex; flex-direction: column; position: fixed; right: 0; top: 0; bottom: 0; z-index: 100; backdrop-filter: blur(12px); overflow: hidden; }
@@ -39,7 +42,7 @@
   .sidebar-time { padding: 12px 20px; border-bottom: 1px solid rgba(0,255,136,0.08); position: relative; z-index: 2; }
   .clock { color: var(--green); font-size: 18px; letter-spacing: 3px; font-family: 'Share Tech Mono', monospace; }
   .date-str { font-size: 10px; color: var(--muted); margin-top: 2px; }
-  nav { flex: 1; padding: 10px 8px; position: relative; z-index: 2; }
+  nav { flex: 1; padding: 10px 8px; position: relative; z-index: 2; overflow-y: auto; }
   .nav-btn { width: 100%; padding: 10px 12px; margin-bottom: 3px; background: transparent; border: none; border-right: 2px solid transparent; color: #4a6a5a; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 13px; font-family: 'Tajawal', sans-serif; text-align: right; transition: all 0.2s; }
   .nav-btn:hover { background: rgba(0,255,136,0.08); color: var(--green); }
   .nav-btn.active { background: rgba(0,255,136,0.12); border-right-color: var(--green); color: var(--green); }
@@ -130,12 +133,83 @@
   .ctf-submit:hover { background: rgba(0,255,136,0.25); }
   .ctf-feedback { font-size: 11px; margin-top: 6px; font-family: 'Share Tech Mono',monospace; min-height: 16px; }
   .ctf-scoreboard { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-  .footer-tag { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); font-family: 'Share Tech Mono',monospace; font-size: 11px; color: rgba(0,255,136,0.3); letter-spacing: 2px; z-index: 9998; pointer-events: none; white-space: nowrap; }
+  .cert-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .cert-card { padding: 20px; transition: all 0.2s; }
+  .cert-card:hover { border-color: rgba(0,255,136,0.5); transform: translateY(-2px); }
+  .cert-badge { font-size: 32px; margin-bottom: 10px; }
+  .cert-name { font-size: 15px; font-weight: 700; color: #e0f0e8; margin-bottom: 4px; }
+  .cert-org { font-size: 11px; color: var(--muted); margin-bottom: 10px; font-family: 'Share Tech Mono',monospace; }
+  .cert-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .cert-tag { font-size: 10px; padding: 3px 10px; border-radius: 20px; }
+  .cert-price { font-size: 11px; color: var(--yellow); margin-bottom: 12px; font-family: 'Share Tech Mono',monospace; }
+  .cert-link { display: block; text-align: center; padding: 8px; background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.3); color: var(--green); text-decoration: none; font-size: 12px; font-family: 'Share Tech Mono',monospace; transition: all 0.2s; }
+  .cert-link:hover { background: rgba(0,255,136,0.2); }
+  .path-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
+  .path-card { padding: 24px; transition: all 0.2s; }
+  .path-card:hover { border-color: rgba(0,255,136,0.5); }
+  .path-icon { font-size: 32px; margin-bottom: 12px; }
+  .path-title { font-size: 16px; font-weight: 700; color: #e0f0e8; margin-bottom: 8px; }
+  .path-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+  .path-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .path-step { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+  .path-step-num { width: 22px; height: 22px; background: rgba(0,255,136,0.15); border: 1px solid var(--green); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; font-family: 'Share Tech Mono',monospace; }
+  .path-links { display: flex; gap: 6px; flex-wrap: wrap; }
+  .path-link { padding: 4px 10px; font-size: 10px; border: 1px solid; text-decoration: none; display: inline-block; font-family: 'Share Tech Mono',monospace; transition: all 0.2s; }
+  .path-link:hover { opacity: 0.8; }
+  /* SKULL HERO */
+  .skull-hero { position: fixed; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 320px; height: 320px; pointer-events: none; z-index: 0; animation: floatSkull 6s ease-in-out infinite; opacity: 0.08; }
+  .skull-hero svg { width: 100%; height: 100%; animation: glowRed 4s ease-in-out infinite; }
+  /* QUOTE */
+  .quote-box { position: fixed; bottom: 30px; left: 30px; z-index: 50; pointer-events: none; max-width: 320px; }
+  .quote-text { font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #ffffff; line-height: 1.6; letter-spacing: 0.5px; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+  .quote-author { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--green); margin-top: 6px; letter-spacing: 2px; }
+  .quote-line { width: 40px; height: 2px; background: var(--green); margin-bottom: 8px; box-shadow: 0 0 8px var(--green); }
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-thumb { background: rgba(0,255,136,0.2); border-radius: 2px; }
 </style>
 </head>
 <body>
+<!-- SKULL HERO BG -->
+<div class="skull-hero">
+  <svg viewBox="0 0 400 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="200" cy="160" rx="175" ry="185" fill="#1a0000"/>
+    <ellipse cx="200" cy="185" rx="148" ry="162" fill="#cc0000"/>
+    <path d="M55 110 Q30 20 200 5 Q370 20 345 110" stroke="#ff2d2d" stroke-width="8" fill="none"/>
+    <ellipse cx="200" cy="192" rx="122" ry="135" fill="#8b0000"/>
+    <!-- عيون -->
+    <ellipse cx="138" cy="175" rx="46" ry="52" fill="#050000"/>
+    <ellipse cx="262" cy="175" rx="46" ry="52" fill="#050000"/>
+    <ellipse cx="138" cy="175" rx="32" ry="38" fill="#ff0000" opacity="0.95"/>
+    <ellipse cx="262" cy="175" rx="32" ry="38" fill="#ff0000" opacity="0.95"/>
+    <ellipse cx="138" cy="175" rx="18" ry="22" fill="#ff4444"/>
+    <ellipse cx="262" cy="175" rx="18" ry="22" fill="#ff4444"/>
+    <ellipse cx="138" cy="175" rx="8" ry="10" fill="white" opacity="0.95"/>
+    <ellipse cx="262" cy="175" rx="8" ry="10" fill="white" opacity="0.95"/>
+    <ellipse cx="142" cy="171" rx="3" ry="4" fill="white"/>
+    <ellipse cx="266" cy="171" rx="3" ry="4" fill="white"/>
+    <!-- أنف -->
+    <path d="M185 235 L200 260 L215 235 Q200 222 185 235Z" fill="#050000"/>
+    <!-- أسنان -->
+    <rect x="95" y="280" width="210" height="72" rx="18" fill="#cc0000"/>
+    <rect x="108" y="284" width="28" height="48" rx="6" fill="#080000"/>
+    <rect x="146" y="284" width="28" height="48" rx="6" fill="#080000"/>
+    <rect x="184" y="284" width="28" height="48" rx="6" fill="#080000"/>
+    <rect x="222" y="284" width="28" height="48" rx="6" fill="#080000"/>
+    <rect x="260" y="284" width="28" height="48" rx="6" fill="#080000"/>
+    <!-- ZERODAY label -->
+    <rect x="60" y="368" width="280" height="52" rx="6" fill="#cc0000" opacity="0.3"/>
+    <rect x="60" y="368" width="280" height="52" rx="6" stroke="#ff2d2d" stroke-width="2" fill="none"/>
+    <text x="200" y="402" text-anchor="middle" fill="white" font-size="28" font-weight="bold" font-family="monospace" letter-spacing="6">ZERODAY</text>
+    <!-- تأثير الضوء -->
+    <ellipse cx="200" cy="100" rx="80" ry="30" fill="#ff0000" opacity="0.08"/>
+  </svg>
+</div>
+<!-- QUOTE CORNER -->
+<div class="quote-box" id="mainApp" style="display:none">
+  <div class="quote-line"></div>
+  <div class="quote-text">"The quieter you become,<br>the more you are able to hear."</div>
+  <div class="quote-author">— Kali Linux</div>
+</div>
 <div class="login-screen" id="loginScreen">
   <div class="login-box" id="loginBox">
     <div class="login-skull">💀</div>
@@ -146,11 +220,10 @@
     <div class="login-error" id="loginError">⚠ كود خاطئ — حاول مرة ثانية</div>
   </div>
 </div>
-<div class="footer-tag">© Abu Eid — Fahad — Khalaf — Azoz</div>
-<div class="layout" id="mainApp" style="display:none">
+<div class="layout" id="appLayout" style="display:none">
   <aside class="sidebar">
     <svg class="sidebar-skull" viewBox="0 0 300 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="150" cy="100" rx="125" ry="135" fill="#2a0000" opacity="0.9"/><ellipse cx="150" cy="118" rx="98" ry="108" fill="#cc0000"/><path d="M52 78 Q28 18 150 6 Q272 18 248 78" stroke="#ff2d2d" stroke-width="6" fill="none"/><ellipse cx="150" cy="123" rx="82" ry="90" fill="#8b0000"/><ellipse cx="108" cy="114" rx="30" ry="34" fill="#0a0000"/><ellipse cx="192" cy="114" rx="30" ry="34" fill="#0a0000"/><ellipse cx="108" cy="114" rx="20" ry="24" fill="#ff0000" opacity="0.95"/><ellipse cx="192" cy="114" rx="20" ry="24" fill="#ff0000" opacity="0.95"/><ellipse cx="108" cy="114" rx="10" ry="13" fill="#ff7777"/><ellipse cx="192" cy="114" rx="10" ry="13" fill="#ff7777"/><ellipse cx="108" cy="114" rx="4" ry="5" fill="white" opacity="0.9"/><ellipse cx="192" cy="114" rx="4" ry="5" fill="white" opacity="0.9"/><path d="M138 152 L150 170 L162 152 Q150 143 138 152Z" fill="#0a0000"/><rect x="78" y="184" width="144" height="52" rx="13" fill="#cc0000"/><rect x="88" y="187" width="19" height="32" rx="4" fill="#1a0000"/><rect x="113" y="187" width="19" height="32" rx="4" fill="#1a0000"/><rect x="138" y="187" width="19" height="32" rx="4" fill="#1a0000"/><rect x="163" y="187" width="19" height="32" rx="4" fill="#1a0000"/><rect x="185" y="187" width="19" height="32" rx="4" fill="#1a0000"/><rect x="58" y="256" width="184" height="38" rx="4" fill="#cc0000" opacity="0.35"/><rect x="58" y="256" width="184" height="38" rx="4" stroke="#ff2d2d" stroke-width="2" fill="none"/><text x="150" y="282" text-anchor="middle" fill="white" font-size="23" font-weight="bold" font-family="monospace" letter-spacing="4">ZERODAY</text>
+      <ellipse cx="150" cy="100" rx="125" ry="135" fill="#2a0000" opacity="0.9"/><ellipse cx="150" cy="118" rx="98" ry="108" fill="#cc0000"/><ellipse cx="150" cy="123" rx="82" ry="90" fill="#8b0000"/><ellipse cx="108" cy="114" rx="30" ry="34" fill="#0a0000"/><ellipse cx="192" cy="114" rx="30" ry="34" fill="#0a0000"/><ellipse cx="108" cy="114" rx="20" ry="24" fill="#ff0000" opacity="0.95"/><ellipse cx="192" cy="114" rx="20" ry="24" fill="#ff0000" opacity="0.95"/><ellipse cx="108" cy="114" rx="10" ry="13" fill="#ff7777"/><ellipse cx="192" cy="114" rx="10" ry="13" fill="#ff7777"/><ellipse cx="108" cy="114" rx="4" ry="5" fill="white" opacity="0.9"/><ellipse cx="192" cy="114" rx="4" ry="5" fill="white" opacity="0.9"/><path d="M138 152 L150 170 L162 152 Q150 143 138 152Z" fill="#0a0000"/><rect x="78" y="184" width="144" height="52" rx="13" fill="#cc0000"/><rect x="88" y="187" width="19" height="32" rx="4" fill="#1a0000"/><rect x="113" y="187" width="19" height="32" rx="4" fill="#1a0000"/><rect x="138" y="187" width="19" height="32" rx="4" fill="#1a0000"/><rect x="163" y="187" width="19" height="32" rx="4" fill="#1a0000"/><rect x="185" y="187" width="19" height="32" rx="4" fill="#1a0000"/><rect x="58" y="256" width="184" height="38" rx="4" fill="#cc0000" opacity="0.35"/><rect x="58" y="256" width="184" height="38" rx="4" stroke="#ff2d2d" stroke-width="2" fill="none"/><text x="150" y="282" text-anchor="middle" fill="white" font-size="23" font-weight="bold" font-family="monospace" letter-spacing="4">ZERODAY</text>
     </svg>
     <div class="logo"><div class="logo-inner"><div class="logo-icon"><svg width="22" height="22" viewBox="0 0 100 100"><ellipse cx="50" cy="42" rx="36" ry="39" fill="#ff2d2d"/><ellipse cx="34" cy="38" rx="11" ry="13" fill="#080c10"/><ellipse cx="66" cy="38" rx="11" ry="13" fill="#080c10"/><ellipse cx="34" cy="38" rx="6" ry="8" fill="#ff0000"/><ellipse cx="66" cy="38" rx="6" ry="8" fill="#ff0000"/><ellipse cx="34" cy="38" rx="3" ry="4" fill="white" opacity="0.9"/><ellipse cx="66" cy="38" rx="3" ry="4" fill="white" opacity="0.9"/><path d="M42 56 L50 66 L58 56 Q50 50 42 56Z" fill="#080c10"/><rect x="27" y="68" width="46" height="22" rx="5" fill="#ff2d2d"/><rect x="31" y="70" width="8" height="14" rx="2" fill="#080c10"/><rect x="43" y="70" width="8" height="14" rx="2" fill="#080c10"/><rect x="55" y="70" width="8" height="14" rx="2" fill="#080c10"/><rect x="65" y="70" width="8" height="14" rx="2" fill="#080c10"/></svg></div><span class="logo-name">CYBERWATCH</span></div><div class="logo-sub">منصة الأمن السيبراني</div></div>
     <div class="user-info"><div class="user-name" id="userName">● GUEST</div><button class="logout-btn" onclick="logout()">تسجيل خروج</button></div>
@@ -160,6 +233,8 @@
       <button class="nav-btn" onclick="showPage('cve',this)"><span class="nav-icon">⚠</span> الثغرات CVE</button>
       <button class="nav-btn" onclick="showPage('news',this)"><span class="nav-icon">◉</span> الأخبار</button>
       <button class="nav-btn" onclick="showPage('learn',this)"><span class="nav-icon">🎓</span> تعلم السايبر</button>
+      <button class="nav-btn" onclick="showPage('certs',this)"><span class="nav-icon">🏆</span> الشهادات</button>
+      <button class="nav-btn" onclick="showPage('paths',this)"><span class="nav-icon">🗺</span> مسارات التعلم</button>
       <button class="nav-btn" onclick="showPage('lessons',this)"><span class="nav-icon">▣</span> الدروس</button>
       <button class="nav-btn" onclick="showPage('ctf',this)"><span class="nav-icon">🚩</span> تحديات CTF</button>
       <button class="nav-btn" onclick="showPage('progress',this)"><span class="nav-icon">◐</span> التقدم</button>
@@ -183,6 +258,8 @@
     <div id="page-cve" class="page"><div class="page-header"><div><div class="page-title">أخبار الثغرات</div><div class="page-sub">● من مصادر الأمن</div></div><div class="threat-badge" id="cve-badge">8 أخبار أمنية</div></div><div class="filter-row"><button class="filter-btn active" onclick="filterCVE('ALL',this)">الكل</button><button class="filter-btn" onclick="filterCVE('CRITICAL',this)">CRITICAL</button><button class="filter-btn" onclick="filterCVE('HIGH',this)">HIGH</button><button class="filter-btn" onclick="filterCVE('MEDIUM',this)">MEDIUM</button><button class="filter-btn" onclick="filterCVE('LOW',this)">LOW</button></div><div class="card"><div class="cve-table-header"><span>المعرف</span><span>العنوان</span><span>النوع</span><span>الخطورة</span><span>الوقت</span></div><div id="cve-table"></div></div></div>
     <div id="page-news" class="page"><div class="page-header"><div><div class="page-title">أخبار الأمن السيبراني</div><div class="page-sub">● تحديث كل 5 دقائق</div></div></div><div id="news-list"></div></div>
     <div id="page-learn" class="page"><div class="page-header"><div><div class="page-title">تعلم الأمن السيبراني</div><div class="page-sub">● روابط مجانية</div></div></div><div class="learn-grid" id="learn-grid"></div></div>
+    <div id="page-certs" class="page"><div class="page-header"><div><div class="page-title">🏆 الشهادات المهنية</div><div class="page-sub">● أهم شهادات الأمن السيبراني</div></div></div><div class="cert-grid" id="cert-grid"></div></div>
+    <div id="page-paths" class="page"><div class="page-header"><div><div class="page-title">🗺 مسارات التعلم</div><div class="page-sub">● خطط تعليمية منظمة</div></div></div><div class="path-grid" id="path-grid"></div></div>
     <div id="page-lessons" class="page"><div class="page-header"><div><div class="page-title">مكتبة الدروس</div><div class="page-sub">● اضغط على النسبة لتحديث تقدمك</div></div></div><div class="lessons-grid" id="lessons-grid"></div></div>
     <div id="page-ctf" class="page">
       <div class="page-header"><div><div class="page-title">🚩 تحديات CTF</div><div class="page-sub">● حل التحديات واكسب النقاط</div></div><div class="threat-badge" id="ctf-score-badge">0 نقطة</div></div>
@@ -203,6 +280,8 @@
 </div>
 <script>
 const CODES={'CYBER-2025':'فهد','HACK-4EVR':'مستخدم 2','ZERO-DAY1':'مستخدم 3','RED-TEAM1':'مستخدم 4','CTF-KING1':'مستخدم 5','HILAL-2002':'Alhilal','KAKA-2002':'KAKA','MDRID-2002':'MDRID','SAAD-2002':'SAAD','MOVE-2002':'MOVE'};
+const certs=[{badge:"🛡️",name:"CompTIA Security+",org:"CompTIA",level:"مبتدئ",levelColor:"#00ff88",price:"~1,200 ريال",desc:"أشهر شهادة مدخل للأمن السيبراني",link:"https://www.comptia.org/certifications/security"},{badge:"🔴",name:"CEH",org:"EC-Council",level:"متوسط",levelColor:"#ff8c00",price:"~3,000 ريال",desc:"Certified Ethical Hacker",link:"https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/"},{badge:"💀",name:"OSCP",org:"Offensive Security",level:"متقدم",levelColor:"#ff2d2d",price:"~3,500 ريال",desc:"أصعب وأهم شهادة اختبار اختراق",link:"https://www.offsec.com/courses/pen-200/"},{badge:"🏛️",name:"CISSP",org:"ISC2",level:"خبير",levelColor:"#9b59b6",price:"~2,500 ريال",desc:"للمتخصصين في أمن المعلومات المؤسسي",link:"https://www.isc2.org/certifications/cissp"},{badge:"☁️",name:"AWS Security",org:"Amazon",level:"متوسط",levelColor:"#ff8c00",price:"~900 ريال",desc:"شهادة أمن الكلاود من AWS",link:"https://aws.amazon.com/certification/certified-security-specialty/"},{badge:"🔵",name:"CompTIA CySA+",org:"CompTIA",level:"متوسط",levelColor:"#ff8c00",price:"~1,200 ريال",desc:"تحليل الأمن السيبراني",link:"https://www.comptia.org/certifications/cybersecurity-analyst"},{badge:"🌐",name:"eJPT",org:"eLearnSecurity",level:"مبتدئ",levelColor:"#00ff88",price:"~400 ريال",desc:"مثالية للمبتدئين في اختبار الاختراق",link:"https://ine.com/certifications/ejpt-certification"},{badge:"🔒",name:"CISM",org:"ISACA",level:"خبير",levelColor:"#9b59b6",price:"~2,000 ريال",desc:"إدارة أمن المعلومات للمديرين",link:"https://www.isaca.org/credentialing/cism"},{badge:"📱",name:"GPEN",org:"GIAC",level:"متقدم",levelColor:"#ff2d2d",price:"~4,000 ريال",desc:"شهادة اختبار اختراق الشبكات",link:"https://www.giac.org/certifications/penetration-tester-gpen/"}];
+const paths=[{icon:"🟢",title:"مسار المبتدئ",desc:"ابدأ من الصفر وتعلم أساسيات الأمن السيبراني",color:"#00ff88",steps:["تعلم أساسيات الشبكات (TCP/IP، DNS)","تعلم Linux الأساسي","ابدأ TryHackMe — المسار المجاني","احصل على CompTIA Security+","جرب تحديات CTF للمبتدئين"],links:[{name:"TryHackMe",url:"https://tryhackme.com",color:"#00ff88"},{name:"CompTIA",url:"https://www.comptia.org",color:"#3498db"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=cybersecurity+beginners",color:"#ff2d2d"}]},{icon:"🔴",title:"مسار الهاكر الأخلاقي",desc:"تخصص في اختبار الاختراق والهجوم",color:"#ff2d2d",steps:["أكمل مسار المبتدئ أولاً","تعلم Python للأمن السيبراني","أكمل HackTheBox — Starting Point","احصل على CEH أو eJPT","بعدها OSCP للمتقدمين"],links:[{name:"HackTheBox",url:"https://hackthebox.com",color:"#9b59b6"},{name:"PortSwigger",url:"https://portswigger.net/web-security",color:"#ff8c00"},{name:"TryHackMe",url:"https://tryhackme.com/path/outline/red-teaming",color:"#00ff88"}]},{icon:"🔵",title:"مسار الدفاع والتحليل",desc:"تخصص في الكشف عن التهديدات والاستجابة",color:"#3498db",steps:["تعلم SIEM وتحليل اللوجات","تعلم Splunk أو ELK Stack","مارس على CyberDefenders","احصل على CompTIA CySA+","تعلم مبادئ Threat Intelligence"],links:[{name:"CyberDefenders",url:"https://cyberdefenders.org",color:"#9b59b6"},{name:"BlueTeamLabs",url:"https://blueteamlabs.online",color:"#3498db"},{name:"Splunk",url:"https://www.splunk.com/en_us/training.html",color:"#00aaff"}]},{icon:"☁️",title:"مسار أمن الكلاود",desc:"تخصص في حماية البنية التحتية السحابية",color:"#00aaff",steps:["تعلم أساسيات AWS أو Azure","افهم IAM وSecurity Groups","مارس CloudGoat للتدريب","احصل على AWS Cloud Practitioner","بعدها AWS Security Specialty"],links:[{name:"AWS Training",url:"https://aws.amazon.com/training",color:"#ff8c00"},{name:"CloudGoat",url:"https://github.com/RhinoSecurityLabs/cloudgoat",color:"#ff2d2d"},{name:"Azure Learn",url:"https://learn.microsoft.com/en-us/azure",color:"#00aaff"}]}];
 const fbCVEs=[{id:"CVE-2025-1234",title:"Remote Code Execution in OpenSSL",tag:"RCE",sev:"CRITICAL",time:"منذ ساعة",link:"https://thehackernews.com"},{id:"CVE-2025-2345",title:"SQL Injection in Apache HTTP Server",tag:"SQLi",sev:"CRITICAL",time:"منذ 3 ساعات",link:"https://thehackernews.com"},{id:"CVE-2025-3456",title:"Privilege Escalation in Linux Kernel",tag:"Priv-Esc",sev:"CRITICAL",time:"منذ 5 ساعات",link:"https://bleepingcomputer.com"},{id:"CVE-2025-4567",title:"XSS Vulnerability in WordPress 6.4",tag:"XSS",sev:"HIGH",time:"منذ 8 ساعات",link:"https://bleepingcomputer.com"},{id:"CVE-2025-5678",title:"Buffer Overflow in Nginx 1.25",tag:"BoF",sev:"HIGH",time:"منذ 12 ساعة",link:"https://thehackernews.com"},{id:"CVE-2025-6789",title:"Authentication Bypass in Cisco IOS",tag:"Auth",sev:"HIGH",time:"منذ يوم",link:"https://thehackernews.com"},{id:"CVE-2025-7890",title:"Information Disclosure in jQuery 3.7",tag:"Info",sev:"MEDIUM",time:"منذ يومين",link:"https://bleepingcomputer.com"},{id:"CVE-2025-8901",title:"CSRF in Popular CMS Platform",tag:"CSRF",sev:"LOW",time:"منذ 3 أيام",link:"https://thehackernews.com"}];
 const fbNews=[{title:"مجموعة Lazarus تستهدف البنوك الآسيوية بهجمات متطورة",source:"The Hacker News",time:"منذ ساعتين",tag:"APT",color:"#9b59b6",link:"https://thehackernews.com"},{title:"ثغرة Zero-Day خطيرة في Microsoft Exchange Server",source:"BleepingComputer",time:"منذ 5 ساعات",tag:"Zero-Day",color:"#e74c3c",link:"https://bleepingcomputer.com"},{title:"اكتشاف برمجية Ransomware جديدة تستهدف المستشفيات",source:"BleepingComputer",time:"منذ 8 ساعات",tag:"Ransomware",color:"#e67e22",link:"https://bleepingcomputer.com"},{title:"CISA تُصدر تحذيراً عاجلاً بشأن ثغرات ICS",source:"CISA",time:"منذ 12 ساعة",tag:"ICS",color:"#3498db",link:"https://thehackernews.com"},{title:"تسريب بيانات يطال 50 مليون مستخدم من منصة كبرى",source:"SecurityWeek",time:"منذ يوم",tag:"Breach",color:"#00ff88",link:"https://thehackernews.com"},{title:"هجوم DDoS ضخم يستهدف بنية تحتية حيوية في أوروبا",source:"The Hacker News",time:"منذ يومين",tag:"DDoS",color:"#ffd700",link:"https://thehackernews.com"}];
 const challenges=[{id:1,cat:"WEB",title:"SQL Injection 101",desc:"الجدول users فيه بيانات مخفية. استخدم SQL Injection للحصول على flag.",pts:100,hint:"جرب: ' OR '1'='1",flag:"FLAG{sql_1nj3ct10n_basic}",color:"#e67e22"},{id:2,cat:"CRYPTO",title:"Base64 Decode",desc:"فك تشفير: Q1lCRVJXQVRDSHtjcnlwdG9fMTAxfQ==",pts:50,hint:"استخدم أي base64 decoder",flag:"CYBERWATCH{crypto_101}",color:"#9b59b6"},{id:3,cat:"WEB",title:"XSS Hunter",desc:"الـ flag مخبأ في: FLAG{xss_f0und}",pts:150,hint:"XSS = Cross Site Scripting",flag:"FLAG{xss_f0und}",color:"#e74c3c"},{id:4,cat:"CRYPTO",title:"Caesar Cipher",desc:"فك: FLAG{fdhvdu_flskhu} باستخدام ROT-3",pts:75,hint:"كل حرف يرجع 3 مراحل",flag:"FLAG{caesar_cipher}",color:"#3498db"},{id:5,cat:"MISC",title:"Hidden in Plain Sight",desc:"اقرأ الحرف الأول من كل كلمة: Find Leet Answers Generated{secret}",pts:100,hint:"الحرف الأول من كل كلمة",flag:"FLAG{secret}",color:"#00ff88"},{id:6,cat:"FORENSICS",title:"Magic Numbers",desc:"ما هو الـ magic number لملفات PNG بالـ hex؟ FLAG{المجاوبة}",pts:125,hint:"PNG file signature",flag:"FLAG{89504e47}",color:"#ffd700"},{id:7,cat:"WEB",title:"Cookie Monster",desc:"اكتب اسم الـ cookie الأساسي لحفظ الجلسة. FLAG{الاسم}",pts:100,hint:"Session management في HTTP",flag:"FLAG{session_id}",color:"#e67e22"},{id:8,cat:"CRYPTO",title:"Hash Crack",desc:"MD5: 5f4dcc3b5aa765d61d8327deb882cf99 — ما هي الكلمة؟ FLAG{الكلمة}",pts:200,hint:"كلمة شائعة جداً",flag:"FLAG{password}",color:"#ff2d2d"},{id:9,cat:"MISC",title:"Recon Master",desc:"ما البروتوكول في HTTPS؟ FLAG{البروتوكول}",pts:50,hint:"Transport Layer Security",flag:"FLAG{tls}",color:"#00aaff"}];
@@ -211,7 +290,7 @@ const learnTopics=[{icon:"🔐",title:"التشفير",desc:"AES، RSA، SHA.",l
 const weekData=[40,70,55,90,30,80,65];
 const sc={CRITICAL:{bg:"rgba(255,45,45,0.12)",border:"#ff2d2d",text:"#ff6b6b",dot:"#ff2d2d"},HIGH:{bg:"rgba(255,140,0,0.12)",border:"#ff8c00",text:"#ffb347",dot:"#ff8c00"},MEDIUM:{bg:"rgba(255,215,0,0.12)",border:"#ffd700",text:"#ffd700",dot:"#ffd700"},LOW:{bg:"rgba(0,255,136,0.12)",border:"#00ff88",text:"#00ff88",dot:"#00ff88"}};
 function checkInvite(){const code=document.getElementById('inviteInput').value.toUpperCase().trim();if(CODES[code]){localStorage.setItem('cw_user',JSON.stringify({code,name:CODES[code]}));loginSuccess(CODES[code]);}else{document.getElementById('loginError').style.display='block';document.getElementById('loginBox').style.animation='shake 0.3s ease';setTimeout(()=>document.getElementById('loginBox').style.animation='',400);}}
-function loginSuccess(name){document.getElementById('loginScreen').style.display='none';document.getElementById('mainApp').style.display='flex';document.getElementById('userName').textContent='● '+name.toUpperCase();init();}
+function loginSuccess(name){document.getElementById('loginScreen').style.display='none';document.getElementById('appLayout').style.display='flex';document.getElementById('mainApp').style.display='block';document.getElementById('userName').textContent='● '+name.toUpperCase();init();}
 function logout(){localStorage.removeItem('cw_user');location.reload();}
 document.addEventListener('DOMContentLoaded',function(){const u=localStorage.getItem('cw_user');if(u){const user=JSON.parse(u);loginSuccess(user.name);}document.getElementById('loginBtn').addEventListener('click',checkInvite);document.getElementById('inviteInput').addEventListener('keydown',function(e){if(e.key==='Enter')checkInvite();});});
 function loadProgress(){try{return JSON.parse(localStorage.getItem('cw_progress'))||defaultLessons.map(l=>({...l}));}catch(e){return defaultLessons.map(l=>({...l}));}}
@@ -221,6 +300,8 @@ function resetProgress(){if(confirm('إعادة تعيين؟')){localStorage.rem
 function loadCTF(){try{return JSON.parse(localStorage.getItem('cw_ctf'))||{};}catch(e){return {};}}
 function saveCTF(d){try{localStorage.setItem('cw_ctf',JSON.stringify(d));}catch(e){}}
 function submitFlag(id){const input=document.getElementById('ctf-flag-'+id);const feedback=document.getElementById('ctf-fb-'+id);const ch=challenges.find(c=>c.id===id);const solved=loadCTF();if(solved[id]){feedback.style.color='var(--green)';feedback.textContent='✓ محلول!';return;}if(input.value.trim().toUpperCase()===ch.flag.toUpperCase()){solved[id]=true;saveCTF(solved);feedback.style.color='var(--green)';feedback.textContent=`✓ صح! +${ch.pts} نقطة 🎉`;renderCTF();renderProgress();}else{feedback.style.color='#ff6b6b';feedback.textContent='✗ خاطئ';}}
+function renderCerts(){document.getElementById('cert-grid').innerHTML=certs.map(c=>`<div class="card cert-card"><div class="cert-badge">${c.badge}</div><div class="cert-name">${c.name}</div><div class="cert-org">${c.org}</div><div class="cert-meta"><span class="cert-tag" style="background:${c.levelColor}22;border:1px solid ${c.levelColor}55;color:${c.levelColor}">${c.level}</span></div><div class="cert-price">💰 ${c.price}</div><div style="font-size:11px;color:var(--muted);margin-bottom:12px">${c.desc}</div><a href="${c.link}" target="_blank" class="cert-link">سجل الآن ←</a></div>`).join('');}
+function renderPaths(){document.getElementById('path-grid').innerHTML=paths.map(p=>`<div class="card path-card"><div class="path-icon">${p.icon}</div><div class="path-title" style="color:${p.color}">${p.title}</div><div class="path-desc">${p.desc}</div><div class="path-steps">${p.steps.map((s,i)=>`<div class="path-step"><div class="path-step-num">${i+1}</div><span style="color:var(--text)">${s}</span></div>`).join('')}</div><div class="path-links">${p.links.map(l=>`<a href="${l.url}" target="_blank" class="path-link" style="border-color:${l.color}55;color:${l.color};background:${l.color}11;">${l.name}</a>`).join('')}</div></div>`).join('');}
 function renderCVEs(cves){document.getElementById('cve-mini').innerHTML=cves.slice(0,4).map(c=>{const s=sc[c.sev];return`<div class="cve-row" onclick="window.open('${c.link}','_blank')"><div class="cve-dot" style="background:${s.dot}"></div><div style="flex:1;min-width:0"><div class="cve-title">${c.title}</div><div class="cve-id">${c.id}</div></div><div class="cve-badge" style="background:${s.bg};border:1px solid ${s.border};color:${s.text}">${c.sev}</div></div>`;}).join('');document.getElementById('cve-table').innerHTML=cves.map(c=>{const s=sc[c.sev];return`<div class="cve-table-row" data-sev="${c.sev}" onclick="window.open('${c.link}','_blank')"><span style="color:var(--green);font-size:11px">${c.id}</span><span style="font-size:11px">${c.title.slice(0,60)}...</span><span style="font-size:10px;color:#8ab0a0">${c.tag}</span><span style="font-weight:bold;color:${s.text};font-size:10px">${c.sev}</span><span style="font-size:10px;color:var(--muted)">${c.time}</span></div>`;}).join('');document.getElementById('stat-cve').textContent=cves.length;const crit=cves.filter(c=>c.sev==='CRITICAL').length;document.getElementById('stat-critical').textContent=crit;document.getElementById('threat-count').textContent=`⚡ ${crit} تهديد حرج`;document.getElementById('cve-badge').textContent=`${cves.length} خبر أمني`;}
 function renderNews(items){document.getElementById('news-list').innerHTML=items.map(n=>`<div class="news-item" onclick="window.open('${n.link}','_blank')"><div class="news-bar" style="background:${n.color};box-shadow:0 0 8px ${n.color}66"></div><div style="flex:1"><div class="news-title">${n.title}</div><div class="news-meta"><span class="news-source">${n.source}</span><span>•</span><span style="color:var(--muted)">${n.time}</span><span class="news-tag" style="background:${n.color}22;border:1px solid ${n.color}55;color:${n.color}">${n.tag}</span></div></div><span style="font-size:20px;color:#2a4a3a">←</span></div>`).join('');}
 function renderCTF(){const solved=loadCTF();const score=challenges.filter(c=>solved[c.id]).reduce((a,c)=>a+c.pts,0);const cnt=Object.keys(solved).length;document.getElementById('ctf-total-score').textContent=score;document.getElementById('ctf-solved-count').textContent=cnt;document.getElementById('ctf-score-badge').textContent=score+' نقطة';document.getElementById('stat-ctf').textContent=cnt;document.getElementById('ctf-grid').innerHTML=challenges.map(ch=>`<div class="card ctf-card" style="border-color:${solved[ch.id]?'var(--green)':'var(--green-border)'}"> ${solved[ch.id]?'<div class="ctf-solved">✓ محلول</div>':''} <div class="ctf-cat" style="color:${ch.color}">${ch.cat} • ${ch.pts} نقطة</div><div class="ctf-title">${ch.title}</div><div class="ctf-desc">${ch.desc}</div><div style="font-size:10px;color:var(--muted);margin-bottom:10px">💡 ${ch.hint}</div>${solved[ch.id]?`<div style="color:var(--green);font-size:12px">✓ تم! +${ch.pts} نقطة</div>`:`<div class="ctf-input-area"><input class="ctf-input" id="ctf-flag-${ch.id}" placeholder="FLAG{...}" onkeydown="if(event.key==='Enter')submitFlag(${ch.id})"/><button class="ctf-submit" onclick="submitFlag(${ch.id})">إرسال</button></div><div class="ctf-feedback" id="ctf-fb-${ch.id}"></div>`}</div>`).join('');}
@@ -231,7 +312,7 @@ function filterCVE(sev,btn){document.querySelectorAll('.filter-btn').forEach(b=>
 function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+id).classList.add('active');if(btn)btn.classList.add('active');}
 function updateClock(){const now=new Date();document.getElementById('clock').textContent=now.toLocaleTimeString('ar',{hour12:false});document.getElementById('dateStr').textContent=now.toLocaleDateString('ar-SA');document.getElementById('syncTime').textContent=now.toLocaleTimeString('ar',{hour12:false});}
 setInterval(updateClock,1000);updateClock();
-function init(){renderProgress();renderLearn();renderCTF();fetchAll();setInterval(fetchAll,5*60*1000);}
+function init(){renderProgress();renderLearn();renderCerts();renderPaths();renderCTF();fetchAll();setInterval(fetchAll,5*60*1000);}
 </script>
 </body>
 </html>
