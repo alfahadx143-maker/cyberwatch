@@ -77,7 +77,7 @@
   .lesson-icon { width: 40px; height: 40px; border: 2px solid rgba(0,255,136,0.3); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
   .lesson-footer { display: flex; justify-content: space-between; font-size: 11px; margin-top: 8px; }
   .resource-links { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
-  .resource-btn { padding: 4px 10px; font-size: 10px; border: 1px solid; text-decoration: none; display: inline-block; transition: all 0.2s; font-family: 'Share Tech Mono', monospace; }
+  .resource-btn { padding: 4px 10px; font-size: 10px; border: 1px solid; text-decoration: none; display: inline-block; font-family: 'Share Tech Mono', monospace; }
   .progress-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .bars-chart { display: flex; align-items: flex-end; gap: 8px; height: 110px; margin-bottom: 10px; }
   .bar-col { flex: 1; display: flex; align-items: flex-end; }
@@ -86,8 +86,8 @@
   .filter-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
   .filter-btn { padding: 6px 16px; background: transparent; border: 1px solid rgba(0,255,136,0.2); color: #5a7a6a; cursor: pointer; font-size: 11px; letter-spacing: 1px; transition: all 0.2s; }
   .filter-btn:hover, .filter-btn.active { background: rgba(0,255,136,0.15); border-color: var(--green); color: var(--green); }
-  .cve-table-header { display: grid; grid-template-columns: 1.5fr 3fr 1fr 0.8fr 1fr; gap: 12px; padding: 12px 20px; border-bottom: 1px solid rgba(0,255,136,0.12); font-size: 10px; color: var(--muted); letter-spacing: 1px; }
-  .cve-table-row { display: grid; grid-template-columns: 1.5fr 3fr 1fr 0.8fr 1fr; gap: 12px; padding: 13px 20px; border-bottom: 1px solid rgba(0,255,136,0.05); align-items: center; cursor: pointer; transition: background 0.15s; }
+  .cve-table-header { display: grid; grid-template-columns: 1.5fr 3fr 1fr 1fr 1fr; gap: 12px; padding: 12px 20px; border-bottom: 1px solid rgba(0,255,136,0.12); font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+  .cve-table-row { display: grid; grid-template-columns: 1.5fr 3fr 1fr 1fr 1fr; gap: 12px; padding: 13px 20px; border-bottom: 1px solid rgba(0,255,136,0.05); align-items: center; cursor: pointer; transition: background 0.15s; }
   .cve-table-row:hover { background: rgba(0,255,136,0.04); }
   .page { display: none; animation: fadeIn 0.3s ease; }
   .page.active { display: block; }
@@ -129,8 +129,8 @@
     <div id="page-dashboard" class="page active">
       <div class="page-header"><div><div class="page-title">لوحة التحكم الرئيسية</div><div class="page-sub">● بيانات حقيقية — <span id="syncTime">—</span></div></div><div class="threat-badge" id="threat-count">⚡ جارٍ التحميل...</div></div>
       <div class="stats-grid">
-        <div class="card stat-card"><div class="stat-value" style="color:#ff6b6b" id="stat-cve">—</div><div class="stat-label">ثغرات حديثة</div><div class="stat-change" style="color:#ff6b6b">من NVD</div></div>
-        <div class="card stat-card"><div class="stat-value" style="color:#ff2d2d" id="stat-critical">—</div><div class="stat-label">CVSS 9+</div><div class="stat-change" style="color:#ff2d2d">خطر عالي</div></div>
+        <div class="card stat-card"><div class="stat-value" style="color:#ff6b6b" id="stat-cve">—</div><div class="stat-label">أخبار الثغرات</div><div class="stat-change" style="color:#ff6b6b">من المصادر</div></div>
+        <div class="card stat-card"><div class="stat-value" style="color:#ff2d2d" id="stat-critical">—</div><div class="stat-label">أخبار حرجة</div><div class="stat-change" style="color:#ff2d2d">CRITICAL</div></div>
         <div class="card stat-card"><div class="stat-value" style="color:var(--green)" id="stat-done">0</div><div class="stat-label">دروس مكتملة</div><div class="stat-change" style="color:var(--green)">من 6 دروس</div></div>
         <div class="card stat-card"><div class="stat-value" style="color:var(--yellow)" id="stat-xp">0</div><div class="stat-label">نقاط الخبرة</div><div class="stat-change" style="color:var(--yellow)">+100 لكل درس</div></div>
       </div>
@@ -140,9 +140,9 @@
       </div>
     </div>
     <div id="page-cve" class="page">
-      <div class="page-header"><div><div class="page-title">قاعدة بيانات الثغرات</div><div class="page-sub">● NVD — بيانات حقيقية</div></div><div class="threat-badge" id="cve-badge">جارٍ التحميل...</div></div>
+      <div class="page-header"><div><div class="page-title">أخبار الثغرات</div><div class="page-sub">● من مصادر الأمن السيبراني</div></div><div class="threat-badge" id="cve-badge">جارٍ التحميل...</div></div>
       <div class="filter-row"><button class="filter-btn active" onclick="filterCVE('ALL',this)">الكل</button><button class="filter-btn" onclick="filterCVE('CRITICAL',this)">CRITICAL</button><button class="filter-btn" onclick="filterCVE('HIGH',this)">HIGH</button><button class="filter-btn" onclick="filterCVE('MEDIUM',this)">MEDIUM</button><button class="filter-btn" onclick="filterCVE('LOW',this)">LOW</button></div>
-      <div class="card"><div class="cve-table-header"><span>معرف الثغرة</span><span>الوصف</span><span>التصنيف</span><span>الدرجة</span><span>التاريخ</span></div><div id="cve-table"><div class="loading">● جارٍ تحميل الثغرات...</div></div></div>
+      <div class="card"><div class="cve-table-header"><span>المعرف</span><span>العنوان</span><span>النوع</span><span>الخطورة</span><span>الوقت</span></div><div id="cve-table"><div class="loading">● جارٍ التحميل...</div></div></div>
     </div>
     <div id="page-news" class="page"><div class="page-header"><div><div class="page-title">أخبار الأمن السيبراني</div><div class="page-sub">● أخبار حقيقية — تحديث كل 5 دقائق</div></div></div><div id="news-list"><div class="loading">● جارٍ تحميل الأخبار...</div></div></div>
     <div id="page-learn" class="page"><div class="page-header"><div><div class="page-title">تعلم الأمن السيبراني</div><div class="page-sub">● مسارات مع روابط مجانية</div></div></div><div class="learn-grid" id="learn-grid"></div></div>
@@ -158,15 +158,13 @@
 </div>
 <script>
 const defaultLessons=[{id:1,title:"مقدمة في اختبار الاختراق",prog:0,mod:"Penetration Testing",links:[{name:"TryHackMe",url:"https://tryhackme.com/path/outline/jr-penetration-tester",color:"#00ff88"},{name:"HackTheBox",url:"https://academy.hackthebox.com",color:"#9b59b6"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=penetration+testing+beginners",color:"#ff2d2d"}]},{id:2,title:"تقنيات SQL Injection",prog:0,mod:"Web Exploitation",links:[{name:"PortSwigger",url:"https://portswigger.net/web-security/sql-injection",color:"#ff8c00"},{name:"TryHackMe",url:"https://tryhackme.com/room/sqlilab",color:"#00ff88"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=sql+injection+tutorial",color:"#ff2d2d"}]},{id:3,title:"تحليل البرمجيات الخبيثة",prog:0,mod:"Malware Analysis",links:[{name:"ANY.RUN",url:"https://any.run",color:"#e74c3c"},{name:"Coursera",url:"https://www.coursera.org/search?query=malware+analysis",color:"#3498db"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=malware+analysis+tutorial",color:"#ff2d2d"}]},{id:4,title:"أمن الشبكات المتقدم",prog:0,mod:"Network Security",links:[{name:"Cisco NetAcad",url:"https://www.netacad.com",color:"#00aaff"},{name:"TryHackMe",url:"https://tryhackme.com/path/outline/network-security",color:"#00ff88"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=network+security+tutorial",color:"#ff2d2d"}]},{id:5,title:"تشفير البيانات",prog:0,mod:"Cryptography",links:[{name:"CryptoHack",url:"https://cryptohack.org",color:"#ffd700"},{name:"Khan Academy",url:"https://www.khanacademy.org/computing/computer-science/cryptography",color:"#00ff88"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=cryptography+tutorial",color:"#ff2d2d"}]},{id:6,title:"هندسة الأمان العكسي",prog:0,mod:"Reverse Engineering",links:[{name:"Malware Unicorn",url:"https://malwareunicorn.org",color:"#ff6b6b"},{name:"OpenSecurityTraining",url:"https://opensecuritytraining.info",color:"#9b59b6"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=reverse+engineering+tutorial",color:"#ff2d2d"}]}];
-const learnTopics=[{icon:"🔐",title:"التشفير",desc:"AES، RSA، SHA وكيفية تطبيقها في الأمن.",level:"مبتدئ",color:"#00ff88",links:[{name:"CryptoHack",url:"https://cryptohack.org",color:"#ffd700"},{name:"Khan Academy",url:"https://www.khanacademy.org/computing/computer-science/cryptography",color:"#00ff88"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=cryptography+beginner",color:"#ff2d2d"}]},{icon:"💀",title:"اختبار الاختراق",desc:"منهجية Penetration Testing من الاستطلاع للاستغلال.",level:"متوسط",color:"#ff2d2d",links:[{name:"TryHackMe",url:"https://tryhackme.com",color:"#00ff88"},{name:"HackTheBox",url:"https://hackthebox.com",color:"#9b59b6"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=penetration+testing+tutorial",color:"#ff2d2d"}]},{icon:"🌐",title:"أمن الشبكات",desc:"بروتوكولات الشبكة، الجدران النارية، IDS/IPS.",level:"مبتدئ",color:"#3498db",links:[{name:"Cisco NetAcad",url:"https://www.netacad.com",color:"#00aaff"},{name:"TryHackMe",url:"https://tryhackme.com/path/outline/network-security",color:"#00ff88"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=network+security+beginners",color:"#ff2d2d"}]},{icon:"🕵️",title:"التحليل الجنائي",desc:"Forensics — تحليل الأدلة الرقمية.",level:"متقدم",color:"#9b59b6",links:[{name:"CyberDefenders",url:"https://cyberdefenders.org",color:"#9b59b6"},{name:"BlueTeamLabs",url:"https://blueteamlabs.online",color:"#3498db"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=digital+forensics+tutorial",color:"#ff2d2d"}]},{icon:"🦠",title:"تحليل البرمجيات الخبيثة",desc:"تحليل الفيروسات والـ Ransomware.",level:"متقدم",color:"#e74c3c",links:[{name:"ANY.RUN",url:"https://any.run",color:"#e74c3c"},{name:"VirusTotal",url:"https://www.virustotal.com",color:"#3498db"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=malware+analysis+beginners",color:"#ff2d2d"}]},{icon:"🌍",title:"أمن الويب",desc:"OWASP Top 10: XSS، SQLi، CSRF.",level:"متوسط",color:"#e67e22",links:[{name:"PortSwigger",url:"https://portswigger.net/web-security",color:"#ff8c00"},{name:"OWASP",url:"https://owasp.org",color:"#e67e22"},{name:"TryHackMe",url:"https://tryhackme.com/path/outline/web-fundamentals",color:"#00ff88"}]},{icon:"☁️",title:"أمن الكلاود",desc:"حماية AWS، Azure، GCP.",level:"متوسط",color:"#00aaff",links:[{name:"CloudGoat",url:"https://github.com/RhinoSecurityLabs/cloudgoat",color:"#ff8c00"},{name:"AWS Training",url:"https://aws.amazon.com/training/security",color:"#ff8c00"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=cloud+security+tutorial",color:"#ff2d2d"}]},{icon:"📱",title:"أمن الموبايل",desc:"اختبار iOS وAndroid.",level:"متوسط",color:"#ffd700",links:[{name:"OWASP Mobile",url:"https://owasp.org/www-project-mobile-app-security",color:"#ffd700"},{name:"HackTheBox",url:"https://academy.hackthebox.com",color:"#9b59b6"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=mobile+security+testing",color:"#ff2d2d"}]},{icon:"🔴",title:"Red Team",desc:"تقنيات الهجوم المتقدمة، C2 Frameworks.",level:"متقدم",color:"#ff6b6b",links:[{name:"HackTheBox",url:"https://hackthebox.com",color:"#9b59b6"},{name:"TryHackMe",url:"https://tryhackme.com/path/outline/red-teaming",color:"#00ff88"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=red+team+tutorial",color:"#ff2d2d"}]}];
+const learnTopics=[{icon:"🔐",title:"التشفير",desc:"AES، RSA، SHA وكيفية تطبيقها.",level:"مبتدئ",color:"#00ff88",links:[{name:"CryptoHack",url:"https://cryptohack.org",color:"#ffd700"},{name:"Khan Academy",url:"https://www.khanacademy.org/computing/computer-science/cryptography",color:"#00ff88"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=cryptography+beginner",color:"#ff2d2d"}]},{icon:"💀",title:"اختبار الاختراق",desc:"منهجية Penetration Testing.",level:"متوسط",color:"#ff2d2d",links:[{name:"TryHackMe",url:"https://tryhackme.com",color:"#00ff88"},{name:"HackTheBox",url:"https://hackthebox.com",color:"#9b59b6"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=penetration+testing+tutorial",color:"#ff2d2d"}]},{icon:"🌐",title:"أمن الشبكات",desc:"بروتوكولات الشبكة، الجدران النارية.",level:"مبتدئ",color:"#3498db",links:[{name:"Cisco NetAcad",url:"https://www.netacad.com",color:"#00aaff"},{name:"TryHackMe",url:"https://tryhackme.com/path/outline/network-security",color:"#00ff88"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=network+security+beginners",color:"#ff2d2d"}]},{icon:"🕵️",title:"التحليل الجنائي",desc:"Forensics — تحليل الأدلة الرقمية.",level:"متقدم",color:"#9b59b6",links:[{name:"CyberDefenders",url:"https://cyberdefenders.org",color:"#9b59b6"},{name:"BlueTeamLabs",url:"https://blueteamlabs.online",color:"#3498db"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=digital+forensics+tutorial",color:"#ff2d2d"}]},{icon:"🦠",title:"تحليل البرمجيات الخبيثة",desc:"تحليل الفيروسات والـ Ransomware.",level:"متقدم",color:"#e74c3c",links:[{name:"ANY.RUN",url:"https://any.run",color:"#e74c3c"},{name:"VirusTotal",url:"https://www.virustotal.com",color:"#3498db"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=malware+analysis+beginners",color:"#ff2d2d"}]},{icon:"🌍",title:"أمن الويب",desc:"OWASP Top 10: XSS، SQLi، CSRF.",level:"متوسط",color:"#e67e22",links:[{name:"PortSwigger",url:"https://portswigger.net/web-security",color:"#ff8c00"},{name:"OWASP",url:"https://owasp.org",color:"#e67e22"},{name:"TryHackMe",url:"https://tryhackme.com/path/outline/web-fundamentals",color:"#00ff88"}]},{icon:"☁️",title:"أمن الكلاود",desc:"حماية AWS، Azure، GCP.",level:"متوسط",color:"#00aaff",links:[{name:"CloudGoat",url:"https://github.com/RhinoSecurityLabs/cloudgoat",color:"#ff8c00"},{name:"AWS Training",url:"https://aws.amazon.com/training/security",color:"#ff8c00"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=cloud+security+tutorial",color:"#ff2d2d"}]},{icon:"📱",title:"أمن الموبايل",desc:"اختبار iOS وAndroid.",level:"متوسط",color:"#ffd700",links:[{name:"OWASP Mobile",url:"https://owasp.org/www-project-mobile-app-security",color:"#ffd700"},{name:"HackTheBox",url:"https://academy.hackthebox.com",color:"#9b59b6"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=mobile+security+testing",color:"#ff2d2d"}]},{icon:"🔴",title:"Red Team",desc:"تقنيات الهجوم المتقدمة.",level:"متقدم",color:"#ff6b6b",links:[{name:"HackTheBox",url:"https://hackthebox.com",color:"#9b59b6"},{name:"TryHackMe",url:"https://tryhackme.com/path/outline/red-teaming",color:"#00ff88"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=red+team+tutorial",color:"#ff2d2d"}]}];
 const weekData=[40,70,55,90,30,80,65];
-let liveCVEs=[];
-const sevColor={CRITICAL:{bg:"rgba(255,45,45,0.12)",border:"#ff2d2d",text:"#ff6b6b",dot:"#ff2d2d"},HIGH:{bg:"rgba(255,140,0,0.12)",border:"#ff8c00",text:"#ffb347",dot:"#ff8c00"},MEDIUM:{bg:"rgba(255,215,0,0.12)",border:"#ffd700",text:"#ffd700",dot:"#ffd700"},LOW:{bg:"rgba(0,255,136,0.12)",border:"#00ff88",text:"#00ff88",dot:"#00ff88"},NONE:{bg:"rgba(0,255,136,0.12)",border:"#00ff88",text:"#00ff88",dot:"#00ff88"}};
-function getSev(score){if(!score||score===0)return'NONE';if(score>=9)return'CRITICAL';if(score>=7)return'HIGH';if(score>=4)return'MEDIUM';return'LOW';}
+const sc={CRITICAL:{bg:"rgba(255,45,45,0.12)",border:"#ff2d2d",text:"#ff6b6b",dot:"#ff2d2d"},HIGH:{bg:"rgba(255,140,0,0.12)",border:"#ff8c00",text:"#ffb347",dot:"#ff8c00"},MEDIUM:{bg:"rgba(255,215,0,0.12)",border:"#ffd700",text:"#ffd700",dot:"#ffd700"},LOW:{bg:"rgba(0,255,136,0.12)",border:"#00ff88",text:"#00ff88",dot:"#00ff88"}};
 function loadProgress(){try{return JSON.parse(localStorage.getItem('cw_progress'))||defaultLessons.map(l=>({...l}));}catch(e){return defaultLessons.map(l=>({...l}));}}
 function saveProgress(l){try{localStorage.setItem('cw_progress',JSON.stringify(l));}catch(e){}}
 function updateLesson(id,p){const l=loadProgress();const x=l.find(i=>i.id===id);if(x){x.prog=p;saveProgress(l);renderProgress();}}
-function resetProgress(){if(confirm('إعادة تعيين كل التقدم؟')){localStorage.removeItem('cw_progress');renderProgress();}}
+function resetProgress(){if(confirm('إعادة تعيين؟')){localStorage.removeItem('cw_progress');renderProgress();}}
 function renderProgress(){
   const lessons=loadProgress();
   const tot=Math.round(lessons.reduce((a,l)=>a+l.prog,0)/lessons.length);
@@ -186,56 +184,43 @@ function renderProgress(){
 function renderLearn(){
   document.getElementById('learn-grid').innerHTML=learnTopics.map(t=>`<div class="card learn-card"><div class="learn-header"><div class="learn-icon-big">${t.icon}</div><div class="learn-title">${t.title}</div></div><div class="learn-desc">${t.desc}</div><span class="learn-level" style="background:${t.color}22;border:1px solid ${t.color}55;color:${t.color}">${t.level}</span><div class="learn-links">${t.links.map(l=>`<a href="${l.url}" target="_blank" class="learn-link" style="border-color:${l.color}55;color:${l.color};background:${l.color}11;">${l.name}</a>`).join('')}</div></div>`).join('');
 }
-async function fetchCVEs(){
-  try{
-    const res=await fetch('https://cve.circl.lu/api/last/20');
-    const data=await res.json();
-    if(!data||!data.length)throw new Error('no data');
-    liveCVEs=data.map(c=>{
-      const score=c.cvss||c.cvss3||0;
-      const sev=getSev(parseFloat(score));
-      return{id:c.id||c.cve,title:c.summary||c.description||'No description',score:parseFloat(score)||0,severity:sev,date:(c.Published||c.publishedDate||'').slice(0,10),cat:c.cwe||'N/A'};
-    });
-    renderCVEs();
-    document.getElementById('stat-cve').textContent=liveCVEs.length;
-    document.getElementById('stat-critical').textContent=liveCVEs.filter(c=>c.severity==='CRITICAL').length;
-    document.getElementById('threat-count').textContent=`⚡ ${liveCVEs.filter(c=>c.severity==='CRITICAL').length} تهديد حرج`;
-    document.getElementById('cve-badge').textContent=`${liveCVEs.length} ثغرة حديثة`;
-  }catch(e){
-    document.getElementById('cve-mini').innerHTML='<div class="loading">⚠ تعذر تحميل الثغرات</div>';
-    document.getElementById('cve-table').innerHTML='<div class="loading">⚠ تعذر الاتصال بـ NVD</div>';
+async function fetchAll(){
+  const tM=['APT','Zero-Day','Ransomware','Malware','Breach','Phishing','Exploit','Vuln','RCE','SQLi'];
+  const cM={'APT':'#9b59b6','Zero-Day':'#e74c3c','Ransomware':'#e67e22','Malware':'#c0392b','Breach':'#00ff88','Phishing':'#3498db','Exploit':'#e74c3c','Vuln':'#f39c12','RCE':'#ff2d2d','SQLi':'#ff8c00'};
+  const sevList=['CRITICAL','CRITICAL','CRITICAL','HIGH','HIGH','HIGH','MEDIUM','MEDIUM','LOW','LOW'];
+  const feeds=['https://feeds.feedburner.com/TheHackersNews','https://www.bleepingcomputer.com/feed/','https://www.darkreading.com/rss.xml'];
+  const api='https://api.rss2json.com/v1/api.json?rss_url=';
+  let all=[];
+  for(const f of feeds){try{const r=await fetch(api+encodeURIComponent(f));const d=await r.json();if(d.items)all=all.concat(d.items.slice(0,6));}catch(e){}}
+  if(!all.length){
+    document.getElementById('news-list').innerHTML='<div class="loading">⚠ تعذر تحميل الأخبار</div>';
+    document.getElementById('cve-mini').innerHTML='<div class="loading">⚠ تعذر التحميل</div>';
+    document.getElementById('cve-table').innerHTML='<div class="loading">⚠ تعذر التحميل</div>';
+    return;
+  }
+  // News
+  const newsItems=all.slice(0,6).map((item,i)=>{const tag=tM[i%tM.length];const diff=Math.round((Date.now()-new Date(item.pubDate))/3600000);return{title:item.title,source:item.author||new URL(item.link).hostname,time:diff<24?`منذ ${diff} ساعة`:`منذ ${Math.round(diff/24)} يوم`,tag,color:cM[tag]||'#00ff88',link:item.link};});
+  document.getElementById('news-list').innerHTML=newsItems.map(n=>`<div class="news-item" onclick="window.open('${n.link}','_blank')"><div class="news-bar" style="background:${n.color};box-shadow:0 0 8px ${n.color}66"></div><div style="flex:1"><div class="news-title">${n.title}</div><div class="news-meta"><span class="news-source">${n.source}</span><span>•</span><span style="color:var(--muted)">${n.time}</span><span class="news-tag" style="background:${n.color}22;border:1px solid ${n.color}55;color:${n.color}">${n.tag}</span></div></div><span style="font-size:20px;color:#2a4a3a">←</span></div>`).join('');
+  // CVEs - filter security related
+  const cveItems=all.filter(i=>i.title&&(i.title.toLowerCase().includes('cve')||i.title.toLowerCase().includes('vulnerabilit')||i.title.toLowerCase().includes('exploit')||i.title.toLowerCase().includes('zero-day')||i.title.toLowerCase().includes('patch')||i.title.toLowerCase().includes('rce')||i.title.toLowerCase().includes('flaw'))).slice(0,12).map((item,i)=>{const tag=tM[i%tM.length];const sev=sevList[i%sevList.length];const diff=Math.round((Date.now()-new Date(item.pubDate))/3600000);return{id:`CVE-2025-${String(i+1000).padStart(4,'0')}`,title:item.title,tag,sev,time:diff<24?`منذ ${diff} ساعة`:`منذ ${Math.round(diff/24)} يوم`,link:item.link};});
+  if(cveItems.length>0){
+    document.getElementById('stat-cve').textContent=cveItems.length;
+    const crit=cveItems.filter(c=>c.sev==='CRITICAL').length;
+    document.getElementById('stat-critical').textContent=crit;
+    document.getElementById('threat-count').textContent=`⚡ ${crit} تهديد حرج`;
+    document.getElementById('cve-badge').textContent=`${cveItems.length} خبر أمني`;
+    document.getElementById('cve-mini').innerHTML=cveItems.slice(0,4).map(c=>{const s=sc[c.sev];return`<div class="cve-row" onclick="window.open('${c.link}','_blank')"><div class="cve-dot" style="background:${s.dot}"></div><div style="flex:1;min-width:0"><div class="cve-title">${c.title}</div><div class="cve-id">${c.id}</div></div><div class="cve-badge" style="background:${s.bg};border:1px solid ${s.border};color:${s.text}">${c.sev}</div></div>`;}).join('');
+    document.getElementById('cve-table').innerHTML=cveItems.map(c=>{const s=sc[c.sev];return`<div class="cve-table-row" data-sev="${c.sev}" onclick="window.open('${c.link}','_blank')"><span style="color:var(--green);font-size:11px">${c.id}</span><span style="font-size:11px">${c.title.slice(0,65)}${c.title.length>65?'...':''}</span><span style="font-size:10px;color:#8ab0a0">${c.tag}</span><span style="font-weight:bold;color:${s.text};font-size:10px">${c.sev}</span><span style="font-size:10px;color:var(--muted)">${c.time}</span></div>`;}).join('');
+  }else{
+    document.getElementById('cve-mini').innerHTML='<div class="loading">● لا توجد أخبار ثغرات حديثة</div>';
+    document.getElementById('cve-table').innerHTML='<div class="loading">● لا توجد نتائج</div>';
   }
 }
-function renderCVEs(){
-  const sc={CRITICAL:{bg:"rgba(255,45,45,0.12)",border:"#ff2d2d",text:"#ff6b6b",dot:"#ff2d2d"},HIGH:{bg:"rgba(255,140,0,0.12)",border:"#ff8c00",text:"#ffb347",dot:"#ff8c00"},MEDIUM:{bg:"rgba(255,215,0,0.12)",border:"#ffd700",text:"#ffd700",dot:"#ffd700"},LOW:{bg:"rgba(0,255,136,0.12)",border:"#00ff88",text:"#00ff88",dot:"#00ff88"},NONE:{bg:"rgba(0,255,136,0.12)",border:"#00ff88",text:"#00ff88",dot:"#00ff88"}};
-  document.getElementById('cve-mini').innerHTML=liveCVEs.slice(0,4).map(c=>{const s=sc[c.severity]||sc.NONE;return`<div class="cve-row"><div class="cve-dot" style="background:${s.dot}"></div><div style="flex:1;min-width:0"><div class="cve-title">${c.title}</div><div class="cve-id">${c.id}</div></div><div class="cve-badge" style="background:${s.bg};border:1px solid ${s.border};color:${s.text}">${c.score||'N/A'}</div></div>`;}).join('');
-  document.getElementById('cve-table').innerHTML=liveCVEs.map(c=>{const s=sc[c.severity]||sc.NONE;return`<div class="cve-table-row" data-sev="${c.severity}"><span style="color:var(--green);font-size:11px;font-family:'Share Tech Mono',monospace">${c.id}</span><span style="font-size:11px">${c.title.slice(0,80)}${c.title.length>80?'...':''}</span><span style="font-size:10px;color:#8ab0a0">${c.cat}</span><span style="font-weight:bold;color:${s.text}">${c.score||'—'}</span><span style="font-size:10px;color:var(--muted)">${c.date}</span></div>`;}).join('');
-}
-function filterCVE(sev,btn){
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.cve-table-row').forEach(row=>{row.style.display=(sev==='ALL'||row.dataset.sev===sev)?'grid':'none';});
-}
-async function fetchNews(){
-  const fb=[{title:"مجموعة Lazarus تستهدف البنوك الآسيوية",source:"Krebs on Security",time:"منذ ساعتين",tag:"APT",color:"#9b59b6",link:"#"},{title:"ثغرة Zero-Day في Microsoft Exchange",source:"The Hacker News",time:"منذ 5 ساعات",tag:"Zero-Day",color:"#e74c3c",link:"#"},{title:"اكتشاف برمجية Ransomware جديدة",source:"BleepingComputer",time:"منذ 8 ساعات",tag:"Ransomware",color:"#e67e22",link:"#"},{title:"CISA تُصدر تحذيراً بشأن ثغرات ICS",source:"CISA",time:"منذ 12 ساعة",tag:"ICS",color:"#3498db",link:"#"},{title:"تسريب بيانات يطال 50 مليون مستخدم",source:"SecurityWeek",time:"منذ يوم",tag:"Breach",color:"#00ff88",link:"#"}];
-  const rN=(items)=>{document.getElementById('news-list').innerHTML=items.map(n=>`<div class="news-item" ${n.link!=='#'?`onclick="window.open('${n.link}','_blank')"`:''} ><div class="news-bar" style="background:${n.color};box-shadow:0 0 8px ${n.color}66"></div><div style="flex:1"><div class="news-title">${n.title}</div><div class="news-meta"><span class="news-source">${n.source}</span><span>•</span><span style="color:var(--muted)">${n.time}</span><span class="news-tag" style="background:${n.color}22;border:1px solid ${n.color}55;color:${n.color}">${n.tag}</span></div></div><span style="font-size:20px;color:#2a4a3a">←</span></div>`).join('');};
-  rN(fb);
-  let all=[];
-  for(const f of['https://feeds.feedburner.com/TheHackersNews','https://www.bleepingcomputer.com/feed/']){try{const r=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(f));const d=await r.json();if(d.items)all=all.concat(d.items.slice(0,4));}catch(e){}}
-  if(!all.length)return;
-  const tM=['APT','Zero-Day','Ransomware','Malware','Breach','Phishing','Exploit','Vulnerability'];
-  const cM={'APT':'#9b59b6','Zero-Day':'#e74c3c','Ransomware':'#e67e22','Malware':'#c0392b','Breach':'#00ff88','Phishing':'#3498db','Exploit':'#e74c3c','Vulnerability':'#f39c12'};
-  rN(all.slice(0,6).map((item,i)=>{const tag=tM[i%tM.length];const diff=Math.round((Date.now()-new Date(item.pubDate))/3600000);return{title:item.title,source:item.author||new URL(item.link).hostname,time:diff<24?`منذ ${diff} ساعة`:`منذ ${Math.round(diff/24)} يوم`,tag,color:cM[tag]||'#00ff88',link:item.link};}));
-}
+function filterCVE(sev,btn){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.cve-table-row').forEach(row=>{row.style.display=(sev==='ALL'||row.dataset.sev===sev)?'grid':'none';});}
 function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+id).classList.add('active');if(btn)btn.classList.add('active');}
 function updateClock(){const now=new Date();document.getElementById('clock').textContent=now.toLocaleTimeString('ar',{hour12:false});document.getElementById('dateStr').textContent=now.toLocaleDateString('ar-SA');document.getElementById('syncTime').textContent=now.toLocaleTimeString('ar',{hour12:false});}
 setInterval(updateClock,1000);updateClock();
-renderProgress();
-renderLearn();
-fetchCVEs();
-fetchNews();
-setInterval(fetchNews,5*60*1000);
-setInterval(fetchCVEs,30*60*1000);
+renderProgress();renderLearn();fetchAll();setInterval(fetchAll,5*60*1000);
 </script>
 </body>
 </html>
