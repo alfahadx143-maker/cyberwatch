@@ -14,11 +14,11 @@
   @keyframes scanline { 0%{transform:translateY(0);opacity:0;} 10%{opacity:0.6;} 90%{opacity:0.6;} 100%{transform:translateY(100vh);opacity:0;} }
   @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
   @keyframes fadeIn { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
-  @keyframes skullPulse { 0%,100%{opacity:0.15;} 50%{opacity:0.25;} }
+  @keyframes skullPulse { 0%,100%{opacity:0.12;} 50%{opacity:0.2;} }
   @keyframes glow { 0%,100%{box-shadow:0 0 6px rgba(255,45,45,0.3);} 50%{box-shadow:0 0 16px rgba(255,45,45,0.6);} }
   .layout { display: flex; min-height: 100vh; position: relative; z-index: 1; }
   .sidebar { width: 220px; min-height: 100vh; background: rgba(8,12,16,0.97); border-left: 1px solid var(--green-border); display: flex; flex-direction: column; position: fixed; right: 0; top: 0; bottom: 0; z-index: 100; backdrop-filter: blur(12px); overflow: hidden; }
-  .sidebar-skull { position: absolute; bottom: 60px; right: 50%; transform: translateX(50%); width: 180px; height: 180px; opacity: 0.12; pointer-events: none; animation: skullPulse 5s ease-in-out infinite; z-index: 0; }
+  .sidebar-skull { position: absolute; bottom: 50px; right: 50%; transform: translateX(50%); width: 160px; height: 160px; opacity: 0.13; pointer-events: none; animation: skullPulse 5s ease-in-out infinite; z-index: 0; }
   .logo { padding: 24px 20px 18px; border-bottom: 1px solid rgba(0,255,136,0.1); position: relative; z-index: 2; }
   .logo-inner { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
   .logo-icon { width: 34px; height: 34px; border: 2px solid #ff2d2d; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 14px rgba(255,45,45,0.5); animation: glow 3s ease-in-out infinite; }
@@ -28,7 +28,7 @@
   .clock { color: var(--green); font-size: 18px; letter-spacing: 3px; font-family: 'Share Tech Mono', monospace; }
   .date-str { font-size: 10px; color: var(--muted); margin-top: 2px; }
   nav { flex: 1; padding: 10px 8px; position: relative; z-index: 2; }
-  .nav-btn { width: 100%; padding: 10px 12px; margin-bottom: 3px; background: transparent; border: none; border-right: 2px solid transparent; color: #4a6a5a; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 13px; font-family: 'Tajawal', sans-serif; text-align: right; transition: all 0.2s; position: relative; z-index: 2; }
+  .nav-btn { width: 100%; padding: 10px 12px; margin-bottom: 3px; background: transparent; border: none; border-right: 2px solid transparent; color: #4a6a5a; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 13px; font-family: 'Tajawal', sans-serif; text-align: right; transition: all 0.2s; }
   .nav-btn:hover { background: rgba(0,255,136,0.08); color: var(--green); }
   .nav-btn.active { background: rgba(0,255,136,0.12); border-right-color: var(--green); color: var(--green); }
   .nav-icon { font-size: 16px; min-width: 22px; text-align: center; }
@@ -74,7 +74,7 @@
   .lesson-card { padding: 20px; cursor: pointer; }
   .lesson-module { font-size: 10px; color: var(--muted); margin-bottom: 6px; letter-spacing: 1px; font-family: 'Share Tech Mono', monospace; }
   .lesson-title { font-size: 14px; color: #d0e8d8; margin-bottom: 12px; }
-  .lesson-icon { width: 40px; height: 40px; border: 2px solid rgba(0,255,136,0.3); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .lesson-icon { width: 40px; height: 40px; border: 2px solid rgba(0,255,136,0.3); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; cursor: pointer; transition: all 0.2s; }
   .lesson-footer { display: flex; justify-content: space-between; font-size: 11px; }
   .progress-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .bars-chart { display: flex; align-items: flex-end; gap: 8px; height: 110px; margin-bottom: 10px; }
@@ -103,13 +103,11 @@
 <body>
 <div class="layout">
   <aside class="sidebar">
-    <!-- جمجمة في السايدبار فقط -->
     <svg class="sidebar-skull" viewBox="0 0 300 340" fill="none" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="150" cy="100" rx="125" ry="135" fill="#2a0000" opacity="0.9"/>
       <ellipse cx="150" cy="118" rx="98" ry="108" fill="#cc0000"/>
       <path d="M52 78 Q28 18 150 6 Q272 18 248 78" stroke="#ff2d2d" stroke-width="6" fill="none"/>
       <ellipse cx="150" cy="123" rx="82" ry="90" fill="#8b0000"/>
-      <path d="M150 38 L144 68 L156 88 L147 114" stroke="#ff5555" stroke-width="2.5" opacity="0.9"/>
       <ellipse cx="108" cy="114" rx="30" ry="34" fill="#0a0000"/>
       <ellipse cx="192" cy="114" rx="30" ry="34" fill="#0a0000"/>
       <ellipse cx="108" cy="114" rx="20" ry="24" fill="#ff0000" opacity="0.95"/>
@@ -149,8 +147,8 @@
       <button class="nav-btn" onclick="showPage('progress',this)"><span class="nav-icon">◐</span> التقدم</button>
     </nav>
     <div class="odoo-status">
-      <div class="odoo-label">ODOO SYNC</div>
-      <span class="odoo-dot"></span><span class="odoo-connected">متصل — v17.0</span>
+      <div class="odoo-label">LOCAL STORAGE</div>
+      <span class="odoo-dot"></span><span class="odoo-connected">محفوظ تلقائياً ✓</span>
     </div>
   </aside>
   <main class="main">
@@ -162,8 +160,8 @@
       <div class="stats-grid">
         <div class="card stat-card"><div class="stat-value" style="color:#ff6b6b">127</div><div class="stat-label">ثغرات اليوم</div><div class="stat-change" style="color:#ff6b6b">+12 من أمس</div></div>
         <div class="card stat-card"><div class="stat-value" style="color:#ff2d2d">8</div><div class="stat-label">تهديدات حرجة</div><div class="stat-change" style="color:#ff2d2d">+3 جديدة</div></div>
-        <div class="card stat-card"><div class="stat-value" style="color:var(--green)">12</div><div class="stat-label">دروس مكتملة</div><div class="stat-change" style="color:var(--green)">من 30 درس</div></div>
-        <div class="card stat-card"><div class="stat-value" style="color:var(--yellow)">2,840</div><div class="stat-label">نقاط الخبرة</div><div class="stat-change" style="color:var(--yellow)">+120 اليوم</div></div>
+        <div class="card stat-card"><div class="stat-value" style="color:var(--green)" id="stat-done">0</div><div class="stat-label">دروس مكتملة</div><div class="stat-change" style="color:var(--green)">من 6 دروس</div></div>
+        <div class="card stat-card"><div class="stat-value" style="color:var(--yellow)" id="stat-xp">0</div><div class="stat-label">نقاط الخبرة</div><div class="stat-change" style="color:var(--yellow)">+100 لكل درس</div></div>
       </div>
       <div class="two-col">
         <div class="card" style="padding:20px">
@@ -171,12 +169,12 @@
           <div id="cve-mini"></div>
         </div>
         <div class="card" style="padding:20px">
-          <div class="section-header"><span class="section-title">تقدمك في Odoo</span><span style="font-size:20px;color:var(--green);font-weight:bold">47%</span></div>
+          <div class="section-header"><span class="section-title">تقدمك الكلي</span><span style="font-size:20px;color:var(--green);font-weight:bold" id="total-pct">0%</span></div>
           <div class="circle-wrap">
             <svg width="100" height="100" viewBox="0 0 100 100">
               <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,255,136,0.1)" stroke-width="8"/>
-              <circle cx="50" cy="50" r="40" fill="none" stroke="var(--green)" stroke-width="8" stroke-dasharray="118.4 251.3" stroke-linecap="round" transform="rotate(-90 50 50)" style="filter:drop-shadow(0 0 6px rgba(0,255,136,0.5))"/>
-              <text x="50" y="55" text-anchor="middle" fill="var(--green)" font-size="18" font-weight="bold">47%</text>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="var(--green)" stroke-width="8" stroke-dasharray="0 251.3" stroke-linecap="round" transform="rotate(-90 50 50)" style="filter:drop-shadow(0 0 6px rgba(0,255,136,0.5))" id="circle-prog"/>
+              <text x="50" y="55" text-anchor="middle" fill="var(--green)" font-size="18" font-weight="bold" id="circle-text">0%</text>
             </svg>
           </div>
           <div id="prog-mini"></div>
@@ -203,14 +201,22 @@
       <div class="learn-grid" id="learn-grid"></div>
     </div>
     <div id="page-lessons" class="page">
-      <div class="page-header"><div><div class="page-title">مكتبة الدروس</div><div class="page-sub">● مزامنة مع Odoo LMS</div></div></div>
+      <div class="page-header"><div><div class="page-title">مكتبة الدروس</div><div class="page-sub">● اضغط على النسبة لتحديث تقدمك</div></div></div>
       <div class="lessons-grid" id="lessons-grid"></div>
     </div>
     <div id="page-progress" class="page">
-      <div class="page-header"><div><div class="page-title">تقدمك التعليمي</div><div class="page-sub">● بيانات من Odoo</div></div></div>
+      <div class="page-header"><div><div class="page-title">تقدمك التعليمي</div><div class="page-sub">● محفوظ في متصفحك تلقائياً</div></div></div>
       <div class="progress-grid">
-        <div class="card" style="padding:24px"><div class="section-title" style="margin-bottom:20px">إحصائيات Odoo</div><div id="odoo-stats"></div></div>
-        <div class="card" style="padding:24px"><div class="section-title" style="margin-bottom:20px">نشاط هذا الأسبوع</div><div class="bars-chart" id="week-chart"></div><div class="bars-days"><span>أحد</span><span>اثن</span><span>ثلا</span><span>أرب</span><span>خمي</span><span>جمع</span><span>سبت</span></div></div>
+        <div class="card" style="padding:24px">
+          <div class="section-title" style="margin-bottom:20px">إحصائياتك</div>
+          <div id="odoo-stats"></div>
+          <button onclick="resetProgress()" style="margin-top:16px;padding:8px 16px;background:rgba(255,45,45,0.1);border:1px solid rgba(255,45,45,0.3);color:#ff6b6b;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:12px;">إعادة تعيين التقدم</button>
+        </div>
+        <div class="card" style="padding:24px">
+          <div class="section-title" style="margin-bottom:20px">نشاط هذا الأسبوع</div>
+          <div class="bars-chart" id="week-chart"></div>
+          <div class="bars-days"><span>أحد</span><span>اثن</span><span>ثلا</span><span>أرب</span><span>خمي</span><span>جمع</span><span>سبت</span></div>
+        </div>
       </div>
     </div>
   </main>
@@ -218,19 +224,31 @@
 <script>
 const cves=[{id:"CVE-2025-1234",severity:"CRITICAL",score:9.8,title:"Remote Code Execution in OpenSSL",date:"2025-03-24",cat:"RCE"},{id:"CVE-2025-5678",severity:"HIGH",score:8.1,title:"SQL Injection in Apache HTTP Server",date:"2025-03-23",cat:"SQLi"},{id:"CVE-2025-9012",severity:"MEDIUM",score:6.5,title:"XSS Vulnerability in WordPress Plugin",date:"2025-03-22",cat:"XSS"},{id:"CVE-2025-3456",severity:"CRITICAL",score:9.1,title:"Privilege Escalation in Linux Kernel",date:"2025-03-21",cat:"Priv-Esc"},{id:"CVE-2025-7890",severity:"HIGH",score:7.8,title:"Buffer Overflow in Nginx",date:"2025-03-20",cat:"BoF"},{id:"CVE-2025-2233",severity:"LOW",score:3.2,title:"Information Disclosure in jQuery",date:"2025-03-19",cat:"Info Disc"}];
 const sevColor={CRITICAL:{bg:"rgba(255,45,45,0.12)",border:"#ff2d2d",text:"#ff6b6b",dot:"#ff2d2d"},HIGH:{bg:"rgba(255,140,0,0.12)",border:"#ff8c00",text:"#ffb347",dot:"#ff8c00"},MEDIUM:{bg:"rgba(255,215,0,0.12)",border:"#ffd700",text:"#ffd700",dot:"#ffd700"},LOW:{bg:"rgba(0,255,136,0.12)",border:"#00ff88",text:"#00ff88",dot:"#00ff88"}};
-const news=[{title:"مجموعة Lazarus تستهدف البنوك الآسيوية",source:"Krebs on Security",time:"منذ ساعتين",tag:"APT",color:"#9b59b6"},{title:"ثغرة Zero-Day في Microsoft Exchange",source:"The Hacker News",time:"منذ 5 ساعات",tag:"Zero-Day",color:"#e74c3c"},{title:"اكتشاف برمجية Ransomware جديدة",source:"BleepingComputer",time:"منذ 8 ساعات",tag:"Ransomware",color:"#e67e22"},{title:"CISA تُصدر تحذيراً بشأن ثغرات ICS",source:"CISA",time:"منذ 12 ساعة",tag:"ICS",color:"#3498db"},{title:"تسريب بيانات يطال 50 مليون مستخدم",source:"SecurityWeek",time:"منذ يوم",tag:"Breach",color:"#00ff88"}];
-const lessons=[{title:"مقدمة في اختبار الاختراق",prog:100,mod:"Penetration Testing"},{title:"تقنيات SQL Injection",prog:75,mod:"Web Exploitation"},{title:"تحليل البرمجيات الخبيثة",prog:40,mod:"Malware Analysis"},{title:"أمن الشبكات المتقدم",prog:20,mod:"Network Security"},{title:"تشفير البيانات",prog:0,mod:"Cryptography"},{title:"هندسة الأمان العكسي",prog:0,mod:"Reverse Engineering"}];
-const odooStats=[{label:"الدروس المكتملة",val:12,total:30,color:"var(--green)"},{label:"ساعات التعلم",val:48,total:120,color:"var(--blue)"},{label:"التحديات المحلولة",val:7,total:25,color:"var(--yellow)"},{label:"شهادات مكتسبة",val:2,total:8,color:"#9b59b6"}];
+const defaultLessons=[{id:1,title:"مقدمة في اختبار الاختراق",prog:0,mod:"Penetration Testing"},{id:2,title:"تقنيات SQL Injection",prog:0,mod:"Web Exploitation"},{id:3,title:"تحليل البرمجيات الخبيثة",prog:0,mod:"Malware Analysis"},{id:4,title:"أمن الشبكات المتقدم",prog:0,mod:"Network Security"},{id:5,title:"تشفير البيانات",prog:0,mod:"Cryptography"},{id:6,title:"هندسة الأمان العكسي",prog:0,mod:"Reverse Engineering"}];
+const learnTopics=[{icon:"🔐",title:"التشفير",desc:"AES، RSA، SHA وكيفية تطبيقها في الأمن.",level:"مبتدئ",color:"#00ff88"},{icon:"💀",title:"اختبار الاختراق",desc:"منهجية الـ Penetration Testing من الاستطلاع للاستغلال.",level:"متوسط",color:"#ff2d2d"},{icon:"🌐",title:"أمن الشبكات",desc:"بروتوكولات الشبكة، الجدران النارية، IDS/IPS.",level:"مبتدئ",color:"#3498db"},{icon:"🕵️",title:"التحليل الجنائي",desc:"Forensics — تحليل الأدلة الرقمية.",level:"متقدم",color:"#9b59b6"},{icon:"🦠",title:"تحليل البرمجيات الخبيثة",desc:"تحليل الفيروسات والـ Ransomware باستخدام Sandbox.",level:"متقدم",color:"#e74c3c"},{icon:"🌍",title:"أمن الويب",desc:"OWASP Top 10: XSS، SQLi، CSRF.",level:"متوسط",color:"#e67e22"},{icon:"☁️",title:"أمن الكلاود",desc:"حماية AWS، Azure، GCP.",level:"متوسط",color:"#00aaff"},{icon:"📱",title:"أمن الموبايل",desc:"اختبار iOS وAndroid — OWASP Mobile Top 10.",level:"متوسط",color:"#ffd700"},{icon:"🔴",title:"Red Team",desc:"تقنيات الهجوم المتقدمة، C2 Frameworks.",level:"متقدم",color:"#ff6b6b"}];
 const weekData=[40,70,55,90,30,80,65];
-const learnTopics=[{icon:"🔐",title:"التشفير",desc:"AES، RSA، SHA وكيفية تطبيقها في الأمن.",level:"مبتدئ",color:"#00ff88"},{icon:"💀",title:"اختبار الاختراق",desc:"منهجية الـ Penetration Testing من الاستطلاع للاستغلال.",level:"متوسط",color:"#ff2d2d"},{icon:"🌐",title:"أمن الشبكات",desc:"بروتوكولات الشبكة، الجدران النارية، IDS/IPS.",level:"مبتدئ",color:"#3498db"},{icon:"🕵️",title:"التحليل الجنائي",desc:"Forensics — تحليل الأدلة الرقمية والتحقيق في الحوادث.",level:"متقدم",color:"#9b59b6"},{icon:"🦠",title:"تحليل البرمجيات الخبيثة",desc:"تحليل الفيروسات والـ Ransomware باستخدام Sandbox.",level:"متقدم",color:"#e74c3c"},{icon:"🌍",title:"أمن الويب",desc:"OWASP Top 10: XSS، SQLi، CSRF وكيفية اكتشافها.",level:"متوسط",color:"#e67e22"},{icon:"☁️",title:"أمن الكلاود",desc:"حماية AWS، Azure، GCP — IAM، Container Security.",level:"متوسط",color:"#00aaff"},{icon:"📱",title:"أمن الموبايل",desc:"اختبار iOS وAndroid — OWASP Mobile Top 10.",level:"متوسط",color:"#ffd700"},{icon:"🔴",title:"Red Team",desc:"تقنيات الهجوم المتقدمة، C2 Frameworks، Lateral Movement.",level:"متقدم",color:"#ff6b6b"}];
+function loadProgress(){try{return JSON.parse(localStorage.getItem('cw_progress'))||defaultLessons.map(l=>({...l}));}catch(e){return defaultLessons.map(l=>({...l}));}}
+function saveProgress(lessons){try{localStorage.setItem('cw_progress',JSON.stringify(lessons));}catch(e){}}
+function getLessons(){return loadProgress();}
+function updateLesson(id,newProg){const lessons=loadProgress();const l=lessons.find(x=>x.id===id);if(l){l.prog=newProg;saveProgress(lessons);renderAll();}}
+function resetProgress(){if(confirm('هل تريد إعادة تعيين كل التقدم؟')){localStorage.removeItem('cw_progress');renderAll();}}
 function renderAll(){
+  const lessons=getLessons();
+  const totalPct=Math.round(lessons.reduce((a,l)=>a+l.prog,0)/lessons.length);
+  const doneLessons=lessons.filter(l=>l.prog===100).length;
+  const xp=lessons.reduce((a,l)=>a+Math.round(l.prog),0);
+  document.getElementById('stat-done').textContent=doneLessons;
+  document.getElementById('stat-xp').textContent=xp;
+  document.getElementById('total-pct').textContent=totalPct+'%';
+  document.getElementById('circle-text').textContent=totalPct+'%';
+  document.getElementById('circle-prog').setAttribute('stroke-dasharray',`${251.3*totalPct/100} 251.3`);
   document.getElementById('cve-mini').innerHTML=cves.slice(0,4).map(c=>{const s=sevColor[c.severity];return`<div class="cve-row"><div class="cve-dot" style="background:${s.dot}"></div><div style="flex:1;min-width:0"><div class="cve-title">${c.title}</div><div class="cve-id">${c.id}</div></div><div class="cve-badge" style="background:${s.bg};border:1px solid ${s.border};color:${s.text}">${c.score}</div></div>`;}).join('');
   document.getElementById('prog-mini').innerHTML=lessons.slice(0,3).map(l=>`<div class="prog-item"><div class="prog-label"><span style="color:#5a7a6a">${l.title}</span><span style="color:${l.prog===100?'var(--green)':'#8ab0a0'}">${l.prog}%</span></div><div class="prog-track"><div class="prog-fill" style="width:${l.prog}%;background:${l.prog===100?'var(--green)':'linear-gradient(90deg,#00ff88,#00cc44)'}"></div></div></div>`).join('');
   document.getElementById('cve-table').innerHTML=cves.map(c=>{const s=sevColor[c.severity];return`<div class="cve-table-row"><span style="color:var(--green);font-size:12px">${c.id}</span><span style="font-size:12px">${c.title}</span><span style="font-size:11px;color:#8ab0a0">${c.cat}</span><span style="font-weight:bold;color:${s.text}">${c.score}</span><span style="font-size:11px;color:var(--muted)">${c.date}</span></div>`;}).join('');
-  document.getElementById('news-list').innerHTML=news.map(n=>`<div class="news-item"><div class="news-bar" style="background:${n.color};box-shadow:0 0 8px ${n.color}66"></div><div style="flex:1"><div class="news-title">${n.title}</div><div class="news-meta"><span class="news-source">${n.source}</span><span>•</span><span style="color:var(--muted)">${n.time}</span><span class="news-tag" style="background:${n.color}22;border:1px solid ${n.color}55;color:${n.color}">${n.tag}</span></div></div></div>`).join('');
   document.getElementById('learn-grid').innerHTML=learnTopics.map(t=>`<div class="card learn-card"><div class="learn-icon">${t.icon}</div><div class="learn-title">${t.title}</div><div class="learn-desc">${t.desc}</div><span class="learn-level" style="background:${t.color}22;border:1px solid ${t.color}55;color:${t.color}">${t.level}</span></div>`).join('');
-  document.getElementById('lessons-grid').innerHTML=lessons.map(l=>`<div class="card lesson-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px"><div><div class="lesson-module">${l.mod}</div><div class="lesson-title">${l.title}</div></div><div class="lesson-icon" style="border-color:${l.prog===100?'var(--green)':'rgba(0,255,136,0.25)'};color:${l.prog===100?'var(--green)':'#5a7a6a'}">${l.prog===100?'✓':l.prog===0?'○':'◐'}</div></div><div class="prog-track" style="margin-bottom:10px;height:4px"><div class="prog-fill" style="width:${l.prog}%;background:linear-gradient(90deg,#00ff88,#00cc44)"></div></div><div class="lesson-footer"><span style="color:var(--muted)">التقدم: ${l.prog}%</span><span style="color:${l.prog===0?'var(--yellow)':l.prog===100?'var(--green)':'var(--blue)'}">${l.prog===0?'ابدأ':l.prog===100?'مراجعة':'تابع'} →</span></div></div>`).join('');
-  document.getElementById('odoo-stats').innerHTML=odooStats.map(s=>`<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span style="color:#8ab0a0">${s.label}</span><span style="color:${s.color}">${s.val} / ${s.total}</span></div><div class="prog-track" style="height:6px"><div class="prog-fill" style="width:${Math.round(s.val/s.total*100)}%;background:${s.color}"></div></div></div>`).join('');
+  document.getElementById('lessons-grid').innerHTML=lessons.map(l=>`<div class="card lesson-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px"><div><div class="lesson-module">${l.mod}</div><div class="lesson-title">${l.title}</div></div><div class="lesson-icon" style="border-color:${l.prog===100?'var(--green)':'rgba(0,255,136,0.25)'};color:${l.prog===100?'var(--green)':'#5a7a6a'}">${l.prog===100?'✓':l.prog===0?'○':'◐'}</div></div><div class="prog-track" style="margin-bottom:10px;height:4px"><div class="prog-fill" style="width:${l.prog}%;background:linear-gradient(90deg,#00ff88,#00cc44)"></div></div><div style="display:flex;gap:4px;margin-bottom:8px">${[0,25,50,75,100].map(p=>`<button onclick="updateLesson(${l.id},${p})" style="flex:1;padding:3px;background:${l.prog===p?'rgba(0,255,136,0.2)':'transparent'};border:1px solid ${l.prog===p?'var(--green)':'rgba(0,255,136,0.15)'};color:${l.prog===p?'var(--green)':'#3a5a4a'};cursor:pointer;font-size:9px;">${p}%</button>`).join('')}</div><div class="lesson-footer"><span style="color:var(--muted)">التقدم: ${l.prog}%</span><span style="color:${l.prog===0?'var(--yellow)':l.prog===100?'var(--green)':'var(--blue)'}">${l.prog===0?'ابدأ':l.prog===100?'مكتمل ✓':'جارٍ'}</span></div></div>`).join('');
+  const statsData=[{label:"الدروس المكتملة",val:doneLessons,total:lessons.length,color:"var(--green)"},{label:"مجموع نقاط الخبرة",val:xp,total:lessons.length*100,color:"var(--blue)"},{label:"التقدم الكلي",val:totalPct,total:100,color:"var(--yellow)"}];
+  document.getElementById('odoo-stats').innerHTML=statsData.map(s=>`<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span style="color:#8ab0a0">${s.label}</span><span style="color:${s.color}">${s.val} / ${s.total}</span></div><div class="prog-track" style="height:6px"><div class="prog-fill" style="width:${Math.round(s.val/s.total*100)}%;background:${s.color}"></div></div></div>`).join('');
   const max=Math.max(...weekData);
   document.getElementById('week-chart').innerHTML=weekData.map(h=>`<div class="bar-col"><div class="bar-fill" style="height:${Math.round(h/max*100)}%"></div></div>`).join('');
 }
@@ -238,7 +256,14 @@ function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classL
 function filterCVE(sev,btn){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.cve-table-row').forEach((row,i)=>{row.style.display=(sev==='ALL'||cves[i].severity===sev)?'grid':'none';});}
 function updateClock(){const now=new Date();document.getElementById('clock').textContent=now.toLocaleTimeString('ar',{hour12:false});document.getElementById('dateStr').textContent=now.toLocaleDateString('ar-SA');document.getElementById('syncTime').textContent=now.toLocaleTimeString('ar',{hour12:false});}
 setInterval(updateClock,1000);updateClock();
-async function fetchRealNews(){const feeds=['https://feeds.feedburner.com/TheHackersNews','https://www.bleepingcomputer.com/feed/'];const apiBase='https://api.rss2json.com/v1/api.json?rss_url=';let allItems=[];for(const feed of feeds){try{const res=await fetch(apiBase+encodeURIComponent(feed));const data=await res.json();if(data.items)allItems=allItems.concat(data.items.slice(0,4));}catch(e){}}if(allItems.length===0)return;const tagMap=['APT','Zero-Day','Ransomware','Malware','Breach','Phishing','Exploit','Vulnerability'];const colorMap={'APT':'#9b59b6','Zero-Day':'#e74c3c','Ransomware':'#e67e22','Malware':'#c0392b','Breach':'#00ff88','Phishing':'#3498db','Exploit':'#e74c3c','Vulnerability':'#f39c12'};const mapped=allItems.slice(0,6).map((item,i)=>{const tag=tagMap[i%tagMap.length];const pub=new Date(item.pubDate);const diff=Math.round((Date.now()-pub)/3600000);const time=diff<24?`منذ ${diff} ساعة`:`منذ ${Math.round(diff/24)} يوم`;return{title:item.title,source:item.author||new URL(item.link).hostname,time,tag,color:colorMap[tag]||'#00ff88',link:item.link};});document.getElementById('news-list').innerHTML=mapped.map(n=>`<div class="news-item" onclick="window.open('${n.link}','_blank')"><div class="news-bar" style="background:${n.color};box-shadow:0 0 8px ${n.color}66"></div><div style="flex:1"><div class="news-title">${n.title}</div><div class="news-meta"><span class="news-source">${n.source}</span><span>•</span><span>${n.time}</span><span class="news-tag" style="background:${n.color}22;border:1px solid ${n.color}55;color:${n.color}">${n.tag}</span></div></div><span style="font-size:20px;color:#2a4a3a">←</span></div>`).join('');}
+async function fetchRealNews(){const fallback=[{title:"مجموعة Lazarus تستهدف البنوك الآسيوية",source:"Krebs on Security",time:"منذ ساعتين",tag:"APT",color:"#9b59b6",link:"#"},{title:"ثغرة Zero-Day في Microsoft Exchange",source:"The Hacker News",time:"منذ 5 ساعات",tag:"Zero-Day",color:"#e74c3c",link:"#"},{title:"اكتشاف برمجية Ransomware جديدة",source:"BleepingComputer",time:"منذ 8 ساعات",tag:"Ransomware",color:"#e67e22",link:"#"},{title:"CISA تُصدر تحذيراً بشأن ثغرات ICS",source:"CISA",time:"منذ 12 ساعة",tag:"ICS",color:"#3498db",link:"#"},{title:"تسريب بيانات يطال 50 مليون مستخدم",source:"SecurityWeek",time:"منذ يوم",tag:"Breach",color:"#00ff88",link:"#"}];
+const renderNews=(items)=>{document.getElementById('news-list').innerHTML=items.map(n=>`<div class="news-item" ${n.link!=='#'?`onclick="window.open('${n.link}','_blank')"`:''} ><div class="news-bar" style="background:${n.color};box-shadow:0 0 8px ${n.color}66"></div><div style="flex:1"><div class="news-title">${n.title}</div><div class="news-meta"><span class="news-source">${n.source}</span><span>•</span><span style="color:var(--muted)">${n.time}</span><span class="news-tag" style="background:${n.color}22;border:1px solid ${n.color}55;color:${n.color}">${n.tag}</span></div></div><span style="font-size:20px;color:#2a4a3a">←</span></div>`).join('');};
+renderNews(fallback);
+let allItems=[];const feeds=['https://feeds.feedburner.com/TheHackersNews','https://www.bleepingcomputer.com/feed/'];const apiBase='https://api.rss2json.com/v1/api.json?rss_url=';
+for(const feed of feeds){try{const res=await fetch(apiBase+encodeURIComponent(feed));const data=await res.json();if(data.items)allItems=allItems.concat(data.items.slice(0,4));}catch(e){}}
+if(allItems.length===0)return;const tagMap=['APT','Zero-Day','Ransomware','Malware','Breach','Phishing','Exploit','Vulnerability'];const colorMap={'APT':'#9b59b6','Zero-Day':'#e74c3c','Ransomware':'#e67e22','Malware':'#c0392b','Breach':'#00ff88','Phishing':'#3498db','Exploit':'#e74c3c','Vulnerability':'#f39c12'};
+const mapped=allItems.slice(0,6).map((item,i)=>{const tag=tagMap[i%tagMap.length];const pub=new Date(item.pubDate);const diff=Math.round((Date.now()-pub)/3600000);const time=diff<24?`منذ ${diff} ساعة`:`منذ ${Math.round(diff/24)} يوم`;return{title:item.title,source:item.author||new URL(item.link).hostname,time,tag,color:colorMap[tag]||'#00ff88',link:item.link};});
+renderNews(mapped);}
 renderAll();fetchRealNews();setInterval(fetchRealNews,5*60*1000);
 </script>
 </body>
