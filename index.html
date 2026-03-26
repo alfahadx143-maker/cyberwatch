@@ -71,11 +71,14 @@
   .news-source { color: var(--muted); }
   .news-tag { padding: 2px 8px; font-size: 10px; }
   .lessons-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
-  .lesson-card { padding: 20px; cursor: pointer; }
+  .lesson-card { padding: 20px; }
   .lesson-module { font-size: 10px; color: var(--muted); margin-bottom: 6px; letter-spacing: 1px; font-family: 'Share Tech Mono', monospace; }
-  .lesson-title { font-size: 14px; color: #d0e8d8; margin-bottom: 12px; }
-  .lesson-icon { width: 40px; height: 40px; border: 2px solid rgba(0,255,136,0.3); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; cursor: pointer; transition: all 0.2s; }
-  .lesson-footer { display: flex; justify-content: space-between; font-size: 11px; }
+  .lesson-title { font-size: 14px; color: #d0e8d8; margin-bottom: 8px; }
+  .lesson-icon { width: 40px; height: 40px; border: 2px solid rgba(0,255,136,0.3); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .lesson-footer { display: flex; justify-content: space-between; font-size: 11px; margin-top: 8px; }
+  .resource-links { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .resource-btn { padding: 4px 10px; font-size: 10px; border: 1px solid; text-decoration: none; display: inline-block; transition: all 0.2s; font-family: 'Share Tech Mono', monospace; }
+  .resource-btn:hover { opacity: 0.8; }
   .progress-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .bars-chart { display: flex; align-items: flex-end; gap: 8px; height: 110px; margin-bottom: 10px; }
   .bar-col { flex: 1; display: flex; align-items: flex-end; }
@@ -90,12 +93,16 @@
   .page { display: none; animation: fadeIn 0.3s ease; }
   .page.active { display: block; }
   .learn-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-  .learn-card { padding: 24px; cursor: pointer; transition: all 0.2s; text-align: center; }
-  .learn-card:hover { border-color: rgba(0,255,136,0.5); transform: translateY(-2px); }
-  .learn-icon { font-size: 36px; margin-bottom: 12px; }
-  .learn-title { font-size: 15px; font-weight: 700; color: #e0f0e8; margin-bottom: 8px; }
-  .learn-desc { font-size: 11px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
-  .learn-level { font-size: 10px; padding: 3px 10px; border-radius: 20px; display: inline-block; }
+  .learn-card { padding: 20px; transition: all 0.2s; }
+  .learn-card:hover { border-color: rgba(0,255,136,0.5); }
+  .learn-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .learn-icon { font-size: 28px; }
+  .learn-title { font-size: 15px; font-weight: 700; color: #e0f0e8; }
+  .learn-desc { font-size: 11px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+  .learn-level { font-size: 10px; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 12px; }
+  .learn-links { display: flex; gap: 6px; flex-wrap: wrap; }
+  .learn-link { padding: 4px 10px; font-size: 10px; border: 1px solid; text-decoration: none; display: inline-block; transition: all 0.2s; font-family: 'Share Tech Mono', monospace; }
+  .learn-link:hover { opacity: 0.8; transform: translateY(-1px); }
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-thumb { background: rgba(0,255,136,0.2); border-radius: 2px; }
 </style>
@@ -104,40 +111,10 @@
 <div class="layout">
   <aside class="sidebar">
     <svg class="sidebar-skull" viewBox="0 0 300 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="150" cy="100" rx="125" ry="135" fill="#2a0000" opacity="0.9"/>
-      <ellipse cx="150" cy="118" rx="98" ry="108" fill="#cc0000"/>
-      <path d="M52 78 Q28 18 150 6 Q272 18 248 78" stroke="#ff2d2d" stroke-width="6" fill="none"/>
-      <ellipse cx="150" cy="123" rx="82" ry="90" fill="#8b0000"/>
-      <ellipse cx="108" cy="114" rx="30" ry="34" fill="#0a0000"/>
-      <ellipse cx="192" cy="114" rx="30" ry="34" fill="#0a0000"/>
-      <ellipse cx="108" cy="114" rx="20" ry="24" fill="#ff0000" opacity="0.95"/>
-      <ellipse cx="192" cy="114" rx="20" ry="24" fill="#ff0000" opacity="0.95"/>
-      <ellipse cx="108" cy="114" rx="10" ry="13" fill="#ff7777"/>
-      <ellipse cx="192" cy="114" rx="10" ry="13" fill="#ff7777"/>
-      <ellipse cx="108" cy="114" rx="4" ry="5" fill="white" opacity="0.9"/>
-      <ellipse cx="192" cy="114" rx="4" ry="5" fill="white" opacity="0.9"/>
-      <path d="M138 152 L150 170 L162 152 Q150 143 138 152Z" fill="#0a0000"/>
-      <rect x="78" y="184" width="144" height="52" rx="13" fill="#cc0000"/>
-      <rect x="88" y="187" width="19" height="32" rx="4" fill="#1a0000"/>
-      <rect x="113" y="187" width="19" height="32" rx="4" fill="#1a0000"/>
-      <rect x="138" y="187" width="19" height="32" rx="4" fill="#1a0000"/>
-      <rect x="163" y="187" width="19" height="32" rx="4" fill="#1a0000"/>
-      <rect x="185" y="187" width="19" height="32" rx="4" fill="#1a0000"/>
-      <rect x="58" y="256" width="184" height="38" rx="4" fill="#cc0000" opacity="0.35"/>
-      <rect x="58" y="256" width="184" height="38" rx="4" stroke="#ff2d2d" stroke-width="2" fill="none"/>
-      <text x="150" y="282" text-anchor="middle" fill="white" font-size="23" font-weight="bold" font-family="monospace" letter-spacing="4">ZERODAY</text>
+      <ellipse cx="150" cy="100" rx="125" ry="135" fill="#2a0000" opacity="0.9"/><ellipse cx="150" cy="118" rx="98" ry="108" fill="#cc0000"/><path d="M52 78 Q28 18 150 6 Q272 18 248 78" stroke="#ff2d2d" stroke-width="6" fill="none"/><ellipse cx="150" cy="123" rx="82" ry="90" fill="#8b0000"/><ellipse cx="108" cy="114" rx="30" ry="34" fill="#0a0000"/><ellipse cx="192" cy="114" rx="30" ry="34" fill="#0a0000"/><ellipse cx="108" cy="114" rx="20" ry="24" fill="#ff0000" opacity="0.95"/><ellipse cx="192" cy="114" rx="20" ry="24" fill="#ff0000" opacity="0.95"/><ellipse cx="108" cy="114" rx="10" ry="13" fill="#ff7777"/><ellipse cx="192" cy="114" rx="10" ry="13" fill="#ff7777"/><ellipse cx="108" cy="114" rx="4" ry="5" fill="white" opacity="0.9"/><ellipse cx="192" cy="114" rx="4" ry="5" fill="white" opacity="0.9"/><path d="M138 152 L150 170 L162 152 Q150 143 138 152Z" fill="#0a0000"/><rect x="78" y="184" width="144" height="52" rx="13" fill="#cc0000"/><rect x="88" y="187" width="19" height="32" rx="4" fill="#1a0000"/><rect x="113" y="187" width="19" height="32" rx="4" fill="#1a0000"/><rect x="138" y="187" width="19" height="32" rx="4" fill="#1a0000"/><rect x="163" y="187" width="19" height="32" rx="4" fill="#1a0000"/><rect x="185" y="187" width="19" height="32" rx="4" fill="#1a0000"/><rect x="58" y="256" width="184" height="38" rx="4" fill="#cc0000" opacity="0.35"/><rect x="58" y="256" width="184" height="38" rx="4" stroke="#ff2d2d" stroke-width="2" fill="none"/><text x="150" y="282" text-anchor="middle" fill="white" font-size="23" font-weight="bold" font-family="monospace" letter-spacing="4">ZERODAY</text>
     </svg>
-    <div class="logo">
-      <div class="logo-inner">
-        <div class="logo-icon"><svg width="22" height="22" viewBox="0 0 100 100"><ellipse cx="50" cy="42" rx="36" ry="39" fill="#ff2d2d"/><ellipse cx="34" cy="38" rx="11" ry="13" fill="#080c10"/><ellipse cx="66" cy="38" rx="11" ry="13" fill="#080c10"/><ellipse cx="34" cy="38" rx="6" ry="8" fill="#ff0000"/><ellipse cx="66" cy="38" rx="6" ry="8" fill="#ff0000"/><ellipse cx="34" cy="38" rx="3" ry="4" fill="white" opacity="0.9"/><ellipse cx="66" cy="38" rx="3" ry="4" fill="white" opacity="0.9"/><path d="M42 56 L50 66 L58 56 Q50 50 42 56Z" fill="#080c10"/><rect x="27" y="68" width="46" height="22" rx="5" fill="#ff2d2d"/><rect x="31" y="70" width="8" height="14" rx="2" fill="#080c10"/><rect x="43" y="70" width="8" height="14" rx="2" fill="#080c10"/><rect x="55" y="70" width="8" height="14" rx="2" fill="#080c10"/><rect x="65" y="70" width="8" height="14" rx="2" fill="#080c10"/></svg></div>
-        <span class="logo-name">CYBERWATCH</span>
-      </div>
-      <div class="logo-sub">منصة الأمن السيبراني</div>
-    </div>
-    <div class="sidebar-time">
-      <div class="clock" id="clock">00:00:00</div>
-      <div class="date-str" id="dateStr">—</div>
-    </div>
+    <div class="logo"><div class="logo-inner"><div class="logo-icon"><svg width="22" height="22" viewBox="0 0 100 100"><ellipse cx="50" cy="42" rx="36" ry="39" fill="#ff2d2d"/><ellipse cx="34" cy="38" rx="11" ry="13" fill="#080c10"/><ellipse cx="66" cy="38" rx="11" ry="13" fill="#080c10"/><ellipse cx="34" cy="38" rx="6" ry="8" fill="#ff0000"/><ellipse cx="66" cy="38" rx="6" ry="8" fill="#ff0000"/><ellipse cx="34" cy="38" rx="3" ry="4" fill="white" opacity="0.9"/><ellipse cx="66" cy="38" rx="3" ry="4" fill="white" opacity="0.9"/><path d="M42 56 L50 66 L58 56 Q50 50 42 56Z" fill="#080c10"/><rect x="27" y="68" width="46" height="22" rx="5" fill="#ff2d2d"/><rect x="31" y="70" width="8" height="14" rx="2" fill="#080c10"/><rect x="43" y="70" width="8" height="14" rx="2" fill="#080c10"/><rect x="55" y="70" width="8" height="14" rx="2" fill="#080c10"/><rect x="65" y="70" width="8" height="14" rx="2" fill="#080c10"/></svg></div><span class="logo-name">CYBERWATCH</span></div><div class="logo-sub">منصة الأمن السيبراني</div></div>
+    <div class="sidebar-time"><div class="clock" id="clock">00:00:00</div><div class="date-str" id="dateStr">—</div></div>
     <nav>
       <button class="nav-btn active" onclick="showPage('dashboard',this)"><span class="nav-icon">◈</span> لوحة التحكم</button>
       <button class="nav-btn" onclick="showPage('cve',this)"><span class="nav-icon">⚠</span> الثغرات CVE</button>
@@ -146,17 +123,11 @@
       <button class="nav-btn" onclick="showPage('lessons',this)"><span class="nav-icon">▣</span> الدروس</button>
       <button class="nav-btn" onclick="showPage('progress',this)"><span class="nav-icon">◐</span> التقدم</button>
     </nav>
-    <div class="odoo-status">
-      <div class="odoo-label">LOCAL STORAGE</div>
-      <span class="odoo-dot"></span><span class="odoo-connected">محفوظ تلقائياً ✓</span>
-    </div>
+    <div class="odoo-status"><div class="odoo-label">LOCAL STORAGE</div><span class="odoo-dot"></span><span class="odoo-connected">محفوظ تلقائياً ✓</span></div>
   </aside>
   <main class="main">
     <div id="page-dashboard" class="page active">
-      <div class="page-header">
-        <div><div class="page-title">لوحة التحكم الرئيسية</div><div class="page-sub">● تحديث مباشر — <span id="syncTime">—</span></div></div>
-        <div class="threat-badge">⚡ 3 تهديدات نشطة</div>
-      </div>
+      <div class="page-header"><div><div class="page-title">لوحة التحكم الرئيسية</div><div class="page-sub">● تحديث مباشر — <span id="syncTime">—</span></div></div><div class="threat-badge">⚡ 3 تهديدات نشطة</div></div>
       <div class="stats-grid">
         <div class="card stat-card"><div class="stat-value" style="color:#ff6b6b">127</div><div class="stat-label">ثغرات اليوم</div><div class="stat-change" style="color:#ff6b6b">+12 من أمس</div></div>
         <div class="card stat-card"><div class="stat-value" style="color:#ff2d2d">8</div><div class="stat-label">تهديدات حرجة</div><div class="stat-change" style="color:#ff2d2d">+3 جديدة</div></div>
@@ -164,59 +135,23 @@
         <div class="card stat-card"><div class="stat-value" style="color:var(--yellow)" id="stat-xp">0</div><div class="stat-label">نقاط الخبرة</div><div class="stat-change" style="color:var(--yellow)">+100 لكل درس</div></div>
       </div>
       <div class="two-col">
-        <div class="card" style="padding:20px">
-          <div class="section-header"><span class="section-title">أحدث الثغرات</span><span class="section-link" onclick="showPage('cve',document.querySelectorAll('.nav-btn')[1])">عرض الكل ←</span></div>
-          <div id="cve-mini"></div>
-        </div>
-        <div class="card" style="padding:20px">
-          <div class="section-header"><span class="section-title">تقدمك الكلي</span><span style="font-size:20px;color:var(--green);font-weight:bold" id="total-pct">0%</span></div>
-          <div class="circle-wrap">
-            <svg width="100" height="100" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,255,136,0.1)" stroke-width="8"/>
-              <circle cx="50" cy="50" r="40" fill="none" stroke="var(--green)" stroke-width="8" stroke-dasharray="0 251.3" stroke-linecap="round" transform="rotate(-90 50 50)" style="filter:drop-shadow(0 0 6px rgba(0,255,136,0.5))" id="circle-prog"/>
-              <text x="50" y="55" text-anchor="middle" fill="var(--green)" font-size="18" font-weight="bold" id="circle-text">0%</text>
-            </svg>
-          </div>
-          <div id="prog-mini"></div>
-        </div>
+        <div class="card" style="padding:20px"><div class="section-header"><span class="section-title">أحدث الثغرات</span><span class="section-link" onclick="showPage('cve',document.querySelectorAll('.nav-btn')[1])">عرض الكل ←</span></div><div id="cve-mini"></div></div>
+        <div class="card" style="padding:20px"><div class="section-header"><span class="section-title">تقدمك الكلي</span><span style="font-size:20px;color:var(--green);font-weight:bold" id="total-pct">0%</span></div><div class="circle-wrap"><svg width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,255,136,0.1)" stroke-width="8"/><circle cx="50" cy="50" r="40" fill="none" stroke="var(--green)" stroke-width="8" stroke-dasharray="0 251.3" stroke-linecap="round" transform="rotate(-90 50 50)" style="filter:drop-shadow(0 0 6px rgba(0,255,136,0.5))" id="circle-prog"/><text x="50" y="55" text-anchor="middle" fill="var(--green)" font-size="18" font-weight="bold" id="circle-text">0%</text></svg></div><div id="prog-mini"></div></div>
       </div>
     </div>
     <div id="page-cve" class="page">
       <div class="page-header"><div><div class="page-title">قاعدة بيانات الثغرات</div><div class="page-sub">● NVD Feed</div></div><div class="threat-badge">127 ثغرة هذا الأسبوع</div></div>
-      <div class="filter-row">
-        <button class="filter-btn active" onclick="filterCVE('ALL',this)">الكل</button>
-        <button class="filter-btn" onclick="filterCVE('CRITICAL',this)">CRITICAL</button>
-        <button class="filter-btn" onclick="filterCVE('HIGH',this)">HIGH</button>
-        <button class="filter-btn" onclick="filterCVE('MEDIUM',this)">MEDIUM</button>
-        <button class="filter-btn" onclick="filterCVE('LOW',this)">LOW</button>
-      </div>
+      <div class="filter-row"><button class="filter-btn active" onclick="filterCVE('ALL',this)">الكل</button><button class="filter-btn" onclick="filterCVE('CRITICAL',this)">CRITICAL</button><button class="filter-btn" onclick="filterCVE('HIGH',this)">HIGH</button><button class="filter-btn" onclick="filterCVE('MEDIUM',this)">MEDIUM</button><button class="filter-btn" onclick="filterCVE('LOW',this)">LOW</button></div>
       <div class="card"><div class="cve-table-header"><span>معرف الثغرة</span><span>الوصف</span><span>التصنيف</span><span>الدرجة</span><span>التاريخ</span></div><div id="cve-table"></div></div>
     </div>
-    <div id="page-news" class="page">
-      <div class="page-header"><div><div class="page-title">أخبار الأمن السيبراني</div><div class="page-sub">● تحديث كل 5 دقائق</div></div></div>
-      <div id="news-list"></div>
-    </div>
-    <div id="page-learn" class="page">
-      <div class="page-header"><div><div class="page-title">تعلم الأمن السيبراني</div><div class="page-sub">● مسارات تعليمية متخصصة</div></div></div>
-      <div class="learn-grid" id="learn-grid"></div>
-    </div>
-    <div id="page-lessons" class="page">
-      <div class="page-header"><div><div class="page-title">مكتبة الدروس</div><div class="page-sub">● اضغط على النسبة لتحديث تقدمك</div></div></div>
-      <div class="lessons-grid" id="lessons-grid"></div>
-    </div>
+    <div id="page-news" class="page"><div class="page-header"><div><div class="page-title">أخبار الأمن السيبراني</div><div class="page-sub">● تحديث كل 5 دقائق</div></div></div><div id="news-list"></div></div>
+    <div id="page-learn" class="page"><div class="page-header"><div><div class="page-title">تعلم الأمن السيبراني</div><div class="page-sub">● مسارات مع روابط مجانية</div></div></div><div class="learn-grid" id="learn-grid"></div></div>
+    <div id="page-lessons" class="page"><div class="page-header"><div><div class="page-title">مكتبة الدروس</div><div class="page-sub">● اضغط على النسبة لتحديث تقدمك</div></div></div><div class="lessons-grid" id="lessons-grid"></div></div>
     <div id="page-progress" class="page">
-      <div class="page-header"><div><div class="page-title">تقدمك التعليمي</div><div class="page-sub">● محفوظ في متصفحك تلقائياً</div></div></div>
+      <div class="page-header"><div><div class="page-title">تقدمك التعليمي</div><div class="page-sub">● محفوظ تلقائياً</div></div></div>
       <div class="progress-grid">
-        <div class="card" style="padding:24px">
-          <div class="section-title" style="margin-bottom:20px">إحصائياتك</div>
-          <div id="odoo-stats"></div>
-          <button onclick="resetProgress()" style="margin-top:16px;padding:8px 16px;background:rgba(255,45,45,0.1);border:1px solid rgba(255,45,45,0.3);color:#ff6b6b;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:12px;">إعادة تعيين التقدم</button>
-        </div>
-        <div class="card" style="padding:24px">
-          <div class="section-title" style="margin-bottom:20px">نشاط هذا الأسبوع</div>
-          <div class="bars-chart" id="week-chart"></div>
-          <div class="bars-days"><span>أحد</span><span>اثن</span><span>ثلا</span><span>أرب</span><span>خمي</span><span>جمع</span><span>سبت</span></div>
-        </div>
+        <div class="card" style="padding:24px"><div class="section-title" style="margin-bottom:20px">إحصائياتك</div><div id="odoo-stats"></div><button onclick="resetProgress()" style="margin-top:16px;padding:8px 16px;background:rgba(255,45,45,0.1);border:1px solid rgba(255,45,45,0.3);color:#ff6b6b;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:12px;">إعادة تعيين التقدم</button></div>
+        <div class="card" style="padding:24px"><div class="section-title" style="margin-bottom:20px">نشاط هذا الأسبوع</div><div class="bars-chart" id="week-chart"></div><div class="bars-days"><span>أحد</span><span>اثن</span><span>ثلا</span><span>أرب</span><span>خمي</span><span>جمع</span><span>سبت</span></div></div>
       </div>
     </div>
   </main>
@@ -224,46 +159,44 @@
 <script>
 const cves=[{id:"CVE-2025-1234",severity:"CRITICAL",score:9.8,title:"Remote Code Execution in OpenSSL",date:"2025-03-24",cat:"RCE"},{id:"CVE-2025-5678",severity:"HIGH",score:8.1,title:"SQL Injection in Apache HTTP Server",date:"2025-03-23",cat:"SQLi"},{id:"CVE-2025-9012",severity:"MEDIUM",score:6.5,title:"XSS Vulnerability in WordPress Plugin",date:"2025-03-22",cat:"XSS"},{id:"CVE-2025-3456",severity:"CRITICAL",score:9.1,title:"Privilege Escalation in Linux Kernel",date:"2025-03-21",cat:"Priv-Esc"},{id:"CVE-2025-7890",severity:"HIGH",score:7.8,title:"Buffer Overflow in Nginx",date:"2025-03-20",cat:"BoF"},{id:"CVE-2025-2233",severity:"LOW",score:3.2,title:"Information Disclosure in jQuery",date:"2025-03-19",cat:"Info Disc"}];
 const sevColor={CRITICAL:{bg:"rgba(255,45,45,0.12)",border:"#ff2d2d",text:"#ff6b6b",dot:"#ff2d2d"},HIGH:{bg:"rgba(255,140,0,0.12)",border:"#ff8c00",text:"#ffb347",dot:"#ff8c00"},MEDIUM:{bg:"rgba(255,215,0,0.12)",border:"#ffd700",text:"#ffd700",dot:"#ffd700"},LOW:{bg:"rgba(0,255,136,0.12)",border:"#00ff88",text:"#00ff88",dot:"#00ff88"}};
-const defaultLessons=[{id:1,title:"مقدمة في اختبار الاختراق",prog:0,mod:"Penetration Testing"},{id:2,title:"تقنيات SQL Injection",prog:0,mod:"Web Exploitation"},{id:3,title:"تحليل البرمجيات الخبيثة",prog:0,mod:"Malware Analysis"},{id:4,title:"أمن الشبكات المتقدم",prog:0,mod:"Network Security"},{id:5,title:"تشفير البيانات",prog:0,mod:"Cryptography"},{id:6,title:"هندسة الأمان العكسي",prog:0,mod:"Reverse Engineering"}];
-const learnTopics=[{icon:"🔐",title:"التشفير",desc:"AES، RSA، SHA وكيفية تطبيقها في الأمن.",level:"مبتدئ",color:"#00ff88"},{icon:"💀",title:"اختبار الاختراق",desc:"منهجية الـ Penetration Testing من الاستطلاع للاستغلال.",level:"متوسط",color:"#ff2d2d"},{icon:"🌐",title:"أمن الشبكات",desc:"بروتوكولات الشبكة، الجدران النارية، IDS/IPS.",level:"مبتدئ",color:"#3498db"},{icon:"🕵️",title:"التحليل الجنائي",desc:"Forensics — تحليل الأدلة الرقمية.",level:"متقدم",color:"#9b59b6"},{icon:"🦠",title:"تحليل البرمجيات الخبيثة",desc:"تحليل الفيروسات والـ Ransomware باستخدام Sandbox.",level:"متقدم",color:"#e74c3c"},{icon:"🌍",title:"أمن الويب",desc:"OWASP Top 10: XSS، SQLi، CSRF.",level:"متوسط",color:"#e67e22"},{icon:"☁️",title:"أمن الكلاود",desc:"حماية AWS، Azure، GCP.",level:"متوسط",color:"#00aaff"},{icon:"📱",title:"أمن الموبايل",desc:"اختبار iOS وAndroid — OWASP Mobile Top 10.",level:"متوسط",color:"#ffd700"},{icon:"🔴",title:"Red Team",desc:"تقنيات الهجوم المتقدمة، C2 Frameworks.",level:"متقدم",color:"#ff6b6b"}];
+const defaultLessons=[{id:1,title:"مقدمة في اختبار الاختراق",prog:0,mod:"Penetration Testing",links:[{name:"TryHackMe",url:"https://tryhackme.com/path/outline/jr-penetration-tester",color:"#00ff88"},{name:"HackTheBox",url:"https://academy.hackthebox.com",color:"#9b59b6"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=penetration+testing+beginners",color:"#ff2d2d"}]},{id:2,title:"تقنيات SQL Injection",prog:0,mod:"Web Exploitation",links:[{name:"PortSwigger",url:"https://portswigger.net/web-security/sql-injection",color:"#ff8c00"},{name:"TryHackMe",url:"https://tryhackme.com/room/sqlilab",color:"#00ff88"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=sql+injection+tutorial",color:"#ff2d2d"}]},{id:3,title:"تحليل البرمجيات الخبيثة",prog:0,mod:"Malware Analysis",links:[{name:"ANY.RUN",url:"https://any.run",color:"#e74c3c"},{name:"Coursera",url:"https://www.coursera.org/search?query=malware+analysis",color:"#3498db"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=malware+analysis+tutorial",color:"#ff2d2d"}]},{id:4,title:"أمن الشبكات المتقدم",prog:0,mod:"Network Security",links:[{name:"Cisco NetAcad",url:"https://www.netacad.com",color:"#00aaff"},{name:"TryHackMe",url:"https://tryhackme.com/path/outline/network-security",color:"#00ff88"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=network+security+tutorial",color:"#ff2d2d"}]},{id:5,title:"تشفير البيانات",prog:0,mod:"Cryptography",links:[{name:"CryptoHack",url:"https://cryptohack.org",color:"#ffd700"},{name:"Khan Academy",url:"https://www.khanacademy.org/computing/computer-science/cryptography",color:"#00ff88"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=cryptography+tutorial",color:"#ff2d2d"}]},{id:6,title:"هندسة الأمان العكسي",prog:0,mod:"Reverse Engineering",links:[{name:"Malware Unicorn",url:"https://malwareunicorn.org",color:"#ff6b6b"},{name:"OpenSecurityTraining",url:"https://opensecuritytraining.info",color:"#9b59b6"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=reverse+engineering+tutorial",color:"#ff2d2d"}]}];
+const learnTopics=[{icon:"🔐",title:"التشفير",desc:"AES، RSA، SHA وكيفية تطبيقها في الأمن.",level:"مبتدئ",color:"#00ff88",links:[{name:"CryptoHack",url:"https://cryptohack.org",color:"#ffd700"},{name:"Khan Academy",url:"https://www.khanacademy.org/computing/computer-science/cryptography",color:"#00ff88"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=cryptography+beginner",color:"#ff2d2d"}]},{icon:"💀",title:"اختبار الاختراق",desc:"منهجية Penetration Testing من الاستطلاع للاستغلال.",level:"متوسط",color:"#ff2d2d",links:[{name:"TryHackMe",url:"https://tryhackme.com",color:"#00ff88"},{name:"HackTheBox",url:"https://hackthebox.com",color:"#9b59b6"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=penetration+testing+tutorial",color:"#ff2d2d"}]},{icon:"🌐",title:"أمن الشبكات",desc:"بروتوكولات الشبكة، الجدران النارية، IDS/IPS.",level:"مبتدئ",color:"#3498db",links:[{name:"Cisco NetAcad",url:"https://www.netacad.com",color:"#00aaff"},{name:"TryHackMe",url:"https://tryhackme.com/path/outline/network-security",color:"#00ff88"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=network+security+beginners",color:"#ff2d2d"}]},{icon:"🕵️",title:"التحليل الجنائي",desc:"Forensics — تحليل الأدلة الرقمية.",level:"متقدم",color:"#9b59b6",links:[{name:"CyberDefenders",url:"https://cyberdefenders.org",color:"#9b59b6"},{name:"BlueTeamLabs",url:"https://blueteamlabs.online",color:"#3498db"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=digital+forensics+tutorial",color:"#ff2d2d"}]},{icon:"🦠",title:"تحليل البرمجيات الخبيثة",desc:"تحليل الفيروسات والـ Ransomware باستخدام Sandbox.",level:"متقدم",color:"#e74c3c",links:[{name:"ANY.RUN",url:"https://any.run",color:"#e74c3c"},{name:"VirusTotal",url:"https://www.virustotal.com",color:"#3498db"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=malware+analysis+beginners",color:"#ff2d2d"}]},{icon:"🌍",title:"أمن الويب",desc:"OWASP Top 10: XSS، SQLi، CSRF.",level:"متوسط",color:"#e67e22",links:[{name:"PortSwigger",url:"https://portswigger.net/web-security",color:"#ff8c00"},{name:"OWASP",url:"https://owasp.org",color:"#e67e22"},{name:"TryHackMe",url:"https://tryhackme.com/path/outline/web-fundamentals",color:"#00ff88"}]},{icon:"☁️",title:"أمن الكلاود",desc:"حماية AWS، Azure، GCP.",level:"متوسط",color:"#00aaff",links:[{name:"CloudGoat",url:"https://github.com/RhinoSecurityLabs/cloudgoat",color:"#ff8c00"},{name:"AWS Training",url:"https://aws.amazon.com/training/security",color:"#ff8c00"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=cloud+security+tutorial",color:"#ff2d2d"}]},{icon:"📱",title:"أمن الموبايل",desc:"اختبار iOS وAndroid — OWASP Mobile Top 10.",level:"متوسط",color:"#ffd700",links:[{name:"OWASP Mobile",url:"https://owasp.org/www-project-mobile-app-security",color:"#ffd700"},{name:"HackTheBox",url:"https://academy.hackthebox.com",color:"#9b59b6"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=mobile+security+testing",color:"#ff2d2d"}]},{icon:"🔴",title:"Red Team",desc:"تقنيات الهجوم المتقدمة، C2 Frameworks.",level:"متقدم",color:"#ff6b6b",links:[{name:"HackTheBox",url:"https://hackthebox.com",color:"#9b59b6"},{name:"TryHackMe",url:"https://tryhackme.com/path/outline/red-teaming",color:"#00ff88"},{name:"YouTube",url:"https://www.youtube.com/results?search_query=red+team+tutorial",color:"#ff2d2d"}]}];
 const weekData=[40,70,55,90,30,80,65];
 function loadProgress(){try{return JSON.parse(localStorage.getItem('cw_progress'))||defaultLessons.map(l=>({...l}));}catch(e){return defaultLessons.map(l=>({...l}));}}
-function saveProgress(lessons){try{localStorage.setItem('cw_progress',JSON.stringify(lessons));}catch(e){}}
-function getLessons(){return loadProgress();}
-function updateLesson(id,newProg){const lessons=loadProgress();const l=lessons.find(x=>x.id===id);if(l){l.prog=newProg;saveProgress(lessons);renderAll();}}
-function resetProgress(){if(confirm('هل تريد إعادة تعيين كل التقدم؟')){localStorage.removeItem('cw_progress');renderAll();}}
+function saveProgress(l){try{localStorage.setItem('cw_progress',JSON.stringify(l));}catch(e){}}
+function updateLesson(id,p){const l=loadProgress();const x=l.find(i=>i.id===id);if(x){x.prog=p;saveProgress(l);renderAll();}}
+function resetProgress(){if(confirm('إعادة تعيين كل التقدم؟')){localStorage.removeItem('cw_progress');renderAll();}}
 function renderAll(){
-  const lessons=getLessons();
-  const totalPct=Math.round(lessons.reduce((a,l)=>a+l.prog,0)/lessons.length);
-  const doneLessons=lessons.filter(l=>l.prog===100).length;
-  const xp=lessons.reduce((a,l)=>a+Math.round(l.prog),0);
-  document.getElementById('stat-done').textContent=doneLessons;
+  const lessons=loadProgress();
+  const tot=Math.round(lessons.reduce((a,l)=>a+l.prog,0)/lessons.length);
+  const done=lessons.filter(l=>l.prog===100).length;
+  const xp=lessons.reduce((a,l)=>a+l.prog,0);
+  document.getElementById('stat-done').textContent=done;
   document.getElementById('stat-xp').textContent=xp;
-  document.getElementById('total-pct').textContent=totalPct+'%';
-  document.getElementById('circle-text').textContent=totalPct+'%';
-  document.getElementById('circle-prog').setAttribute('stroke-dasharray',`${251.3*totalPct/100} 251.3`);
+  document.getElementById('total-pct').textContent=tot+'%';
+  document.getElementById('circle-text').textContent=tot+'%';
+  document.getElementById('circle-prog').setAttribute('stroke-dasharray',`${251.3*tot/100} 251.3`);
   document.getElementById('cve-mini').innerHTML=cves.slice(0,4).map(c=>{const s=sevColor[c.severity];return`<div class="cve-row"><div class="cve-dot" style="background:${s.dot}"></div><div style="flex:1;min-width:0"><div class="cve-title">${c.title}</div><div class="cve-id">${c.id}</div></div><div class="cve-badge" style="background:${s.bg};border:1px solid ${s.border};color:${s.text}">${c.score}</div></div>`;}).join('');
   document.getElementById('prog-mini').innerHTML=lessons.slice(0,3).map(l=>`<div class="prog-item"><div class="prog-label"><span style="color:#5a7a6a">${l.title}</span><span style="color:${l.prog===100?'var(--green)':'#8ab0a0'}">${l.prog}%</span></div><div class="prog-track"><div class="prog-fill" style="width:${l.prog}%;background:${l.prog===100?'var(--green)':'linear-gradient(90deg,#00ff88,#00cc44)'}"></div></div></div>`).join('');
   document.getElementById('cve-table').innerHTML=cves.map(c=>{const s=sevColor[c.severity];return`<div class="cve-table-row"><span style="color:var(--green);font-size:12px">${c.id}</span><span style="font-size:12px">${c.title}</span><span style="font-size:11px;color:#8ab0a0">${c.cat}</span><span style="font-weight:bold;color:${s.text}">${c.score}</span><span style="font-size:11px;color:var(--muted)">${c.date}</span></div>`;}).join('');
-  document.getElementById('learn-grid').innerHTML=learnTopics.map(t=>`<div class="card learn-card"><div class="learn-icon">${t.icon}</div><div class="learn-title">${t.title}</div><div class="learn-desc">${t.desc}</div><span class="learn-level" style="background:${t.color}22;border:1px solid ${t.color}55;color:${t.color}">${t.level}</span></div>`).join('');
-  document.getElementById('lessons-grid').innerHTML=lessons.map(l=>`<div class="card lesson-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px"><div><div class="lesson-module">${l.mod}</div><div class="lesson-title">${l.title}</div></div><div class="lesson-icon" style="border-color:${l.prog===100?'var(--green)':'rgba(0,255,136,0.25)'};color:${l.prog===100?'var(--green)':'#5a7a6a'}">${l.prog===100?'✓':l.prog===0?'○':'◐'}</div></div><div class="prog-track" style="margin-bottom:10px;height:4px"><div class="prog-fill" style="width:${l.prog}%;background:linear-gradient(90deg,#00ff88,#00cc44)"></div></div><div style="display:flex;gap:4px;margin-bottom:8px">${[0,25,50,75,100].map(p=>`<button onclick="updateLesson(${l.id},${p})" style="flex:1;padding:3px;background:${l.prog===p?'rgba(0,255,136,0.2)':'transparent'};border:1px solid ${l.prog===p?'var(--green)':'rgba(0,255,136,0.15)'};color:${l.prog===p?'var(--green)':'#3a5a4a'};cursor:pointer;font-size:9px;">${p}%</button>`).join('')}</div><div class="lesson-footer"><span style="color:var(--muted)">التقدم: ${l.prog}%</span><span style="color:${l.prog===0?'var(--yellow)':l.prog===100?'var(--green)':'var(--blue)'}">${l.prog===0?'ابدأ':l.prog===100?'مكتمل ✓':'جارٍ'}</span></div></div>`).join('');
-  const statsData=[{label:"الدروس المكتملة",val:doneLessons,total:lessons.length,color:"var(--green)"},{label:"مجموع نقاط الخبرة",val:xp,total:lessons.length*100,color:"var(--blue)"},{label:"التقدم الكلي",val:totalPct,total:100,color:"var(--yellow)"}];
-  document.getElementById('odoo-stats').innerHTML=statsData.map(s=>`<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span style="color:#8ab0a0">${s.label}</span><span style="color:${s.color}">${s.val} / ${s.total}</span></div><div class="prog-track" style="height:6px"><div class="prog-fill" style="width:${Math.round(s.val/s.total*100)}%;background:${s.color}"></div></div></div>`).join('');
-  const max=Math.max(...weekData);
-  document.getElementById('week-chart').innerHTML=weekData.map(h=>`<div class="bar-col"><div class="bar-fill" style="height:${Math.round(h/max*100)}%"></div></div>`).join('');
+  document.getElementById('learn-grid').innerHTML=learnTopics.map(t=>`<div class="card learn-card"><div class="learn-header"><div class="learn-icon">${t.icon}</div><div class="learn-title">${t.title}</div></div><div class="learn-desc">${t.desc}</div><span class="learn-level" style="background:${t.color}22;border:1px solid ${t.color}55;color:${t.color}">${t.level}</span><div class="learn-links">${t.links.map(l=>`<a href="${l.url}" target="_blank" class="learn-link" style="border-color:${l.color}55;color:${l.color};background:${l.color}11;">${l.name}</a>`).join('')}</div></div>`).join('');
+  document.getElementById('lessons-grid').innerHTML=lessons.map(l=>`<div class="card lesson-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px"><div><div class="lesson-module">${l.mod}</div><div class="lesson-title">${l.title}</div></div><div class="lesson-icon" style="border-color:${l.prog===100?'var(--green)':'rgba(0,255,136,0.25)'};color:${l.prog===100?'var(--green)':'#5a7a6a'}">${l.prog===100?'✓':l.prog===0?'○':'◐'}</div></div><div class="resource-links">${defaultLessons.find(d=>d.id===l.id).links.map(r=>`<a href="${r.url}" target="_blank" class="resource-btn" style="border-color:${r.color}55;color:${r.color};background:${r.color}11;">${r.name}</a>`).join('')}</div><div class="prog-track" style="margin:10px 0;height:4px"><div class="prog-fill" style="width:${l.prog}%;background:linear-gradient(90deg,#00ff88,#00cc44)"></div></div><div style="display:flex;gap:4px;margin-bottom:6px">${[0,25,50,75,100].map(p=>`<button onclick="updateLesson(${l.id},${p})" style="flex:1;padding:3px;background:${l.prog===p?'rgba(0,255,136,0.2)':'transparent'};border:1px solid ${l.prog===p?'var(--green)':'rgba(0,255,136,0.15)'};color:${l.prog===p?'var(--green)':'#3a5a4a'};cursor:pointer;font-size:9px;">${p}%</button>`).join('')}</div><div class="lesson-footer"><span style="color:var(--muted)">التقدم: ${l.prog}%</span><span style="color:${l.prog===0?'var(--yellow)':l.prog===100?'var(--green)':'var(--blue)'}">${l.prog===0?'ابدأ':l.prog===100?'مكتمل ✓':'جارٍ'}</span></div></div>`).join('');
+  document.getElementById('odoo-stats').innerHTML=[{label:"الدروس المكتملة",val:done,total:lessons.length,color:"var(--green)"},{label:"نقاط الخبرة",val:xp,total:lessons.length*100,color:"var(--blue)"},{label:"التقدم الكلي",val:tot,total:100,color:"var(--yellow)"}].map(s=>`<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span style="color:#8ab0a0">${s.label}</span><span style="color:${s.color}">${s.val} / ${s.total}</span></div><div class="prog-track" style="height:6px"><div class="prog-fill" style="width:${Math.round(s.val/s.total*100)}%;background:${s.color}"></div></div></div>`).join('');
+  const mx=Math.max(...weekData);
+  document.getElementById('week-chart').innerHTML=weekData.map(h=>`<div class="bar-col"><div class="bar-fill" style="height:${Math.round(h/mx*100)}%"></div></div>`).join('');
 }
 function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+id).classList.add('active');if(btn)btn.classList.add('active');}
 function filterCVE(sev,btn){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.cve-table-row').forEach((row,i)=>{row.style.display=(sev==='ALL'||cves[i].severity===sev)?'grid':'none';});}
 function updateClock(){const now=new Date();document.getElementById('clock').textContent=now.toLocaleTimeString('ar',{hour12:false});document.getElementById('dateStr').textContent=now.toLocaleDateString('ar-SA');document.getElementById('syncTime').textContent=now.toLocaleTimeString('ar',{hour12:false});}
 setInterval(updateClock,1000);updateClock();
-async function fetchRealNews(){const fallback=[{title:"مجموعة Lazarus تستهدف البنوك الآسيوية",source:"Krebs on Security",time:"منذ ساعتين",tag:"APT",color:"#9b59b6",link:"#"},{title:"ثغرة Zero-Day في Microsoft Exchange",source:"The Hacker News",time:"منذ 5 ساعات",tag:"Zero-Day",color:"#e74c3c",link:"#"},{title:"اكتشاف برمجية Ransomware جديدة",source:"BleepingComputer",time:"منذ 8 ساعات",tag:"Ransomware",color:"#e67e22",link:"#"},{title:"CISA تُصدر تحذيراً بشأن ثغرات ICS",source:"CISA",time:"منذ 12 ساعة",tag:"ICS",color:"#3498db",link:"#"},{title:"تسريب بيانات يطال 50 مليون مستخدم",source:"SecurityWeek",time:"منذ يوم",tag:"Breach",color:"#00ff88",link:"#"}];
-const renderNews=(items)=>{document.getElementById('news-list').innerHTML=items.map(n=>`<div class="news-item" ${n.link!=='#'?`onclick="window.open('${n.link}','_blank')"`:''} ><div class="news-bar" style="background:${n.color};box-shadow:0 0 8px ${n.color}66"></div><div style="flex:1"><div class="news-title">${n.title}</div><div class="news-meta"><span class="news-source">${n.source}</span><span>•</span><span style="color:var(--muted)">${n.time}</span><span class="news-tag" style="background:${n.color}22;border:1px solid ${n.color}55;color:${n.color}">${n.tag}</span></div></div><span style="font-size:20px;color:#2a4a3a">←</span></div>`).join('');};
-renderNews(fallback);
-let allItems=[];const feeds=['https://feeds.feedburner.com/TheHackersNews','https://www.bleepingcomputer.com/feed/'];const apiBase='https://api.rss2json.com/v1/api.json?rss_url=';
-for(const feed of feeds){try{const res=await fetch(apiBase+encodeURIComponent(feed));const data=await res.json();if(data.items)allItems=allItems.concat(data.items.slice(0,4));}catch(e){}}
-if(allItems.length===0)return;const tagMap=['APT','Zero-Day','Ransomware','Malware','Breach','Phishing','Exploit','Vulnerability'];const colorMap={'APT':'#9b59b6','Zero-Day':'#e74c3c','Ransomware':'#e67e22','Malware':'#c0392b','Breach':'#00ff88','Phishing':'#3498db','Exploit':'#e74c3c','Vulnerability':'#f39c12'};
-const mapped=allItems.slice(0,6).map((item,i)=>{const tag=tagMap[i%tagMap.length];const pub=new Date(item.pubDate);const diff=Math.round((Date.now()-pub)/3600000);const time=diff<24?`منذ ${diff} ساعة`:`منذ ${Math.round(diff/24)} يوم`;return{title:item.title,source:item.author||new URL(item.link).hostname,time,tag,color:colorMap[tag]||'#00ff88',link:item.link};});
-renderNews(mapped);}
+async function fetchRealNews(){const fb=[{title:"مجموعة Lazarus تستهدف البنوك الآسيوية",source:"Krebs on Security",time:"منذ ساعتين",tag:"APT",color:"#9b59b6",link:"#"},{title:"ثغرة Zero-Day في Microsoft Exchange",source:"The Hacker News",time:"منذ 5 ساعات",tag:"Zero-Day",color:"#e74c3c",link:"#"},{title:"اكتشاف برمجية Ransomware جديدة",source:"BleepingComputer",time:"منذ 8 ساعات",tag:"Ransomware",color:"#e67e22",link:"#"},{title:"CISA تُصدر تحذيراً بشأن ثغرات ICS",source:"CISA",time:"منذ 12 ساعة",tag:"ICS",color:"#3498db",link:"#"},{title:"تسريب بيانات يطال 50 مليون مستخدم",source:"SecurityWeek",time:"منذ يوم",tag:"Breach",color:"#00ff88",link:"#"}];
+const rN=(items)=>{document.getElementById('news-list').innerHTML=items.map(n=>`<div class="news-item" ${n.link!=='#'?`onclick="window.open('${n.link}','_blank')"`:''} ><div class="news-bar" style="background:${n.color};box-shadow:0 0 8px ${n.color}66"></div><div style="flex:1"><div class="news-title">${n.title}</div><div class="news-meta"><span class="news-source">${n.source}</span><span>•</span><span style="color:var(--muted)">${n.time}</span><span class="news-tag" style="background:${n.color}22;border:1px solid ${n.color}55;color:${n.color}">${n.tag}</span></div></div><span style="font-size:20px;color:#2a4a3a">←</span></div>`).join('');};
+rN(fb);let all=[];
+for(const f of['https://feeds.feedburner.com/TheHackersNews','https://www.bleepingcomputer.com/feed/']){try{const r=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(f));const d=await r.json();if(d.items)all=all.concat(d.items.slice(0,4));}catch(e){}}
+if(!all.length)return;
+const tM=['APT','Zero-Day','Ransomware','Malware','Breach','Phishing','Exploit','Vulnerability'];
+const cM={'APT':'#9b59b6','Zero-Day':'#e74c3c','Ransomware':'#e67e22','Malware':'#c0392b','Breach':'#00ff88','Phishing':'#3498db','Exploit':'#e74c3c','Vulnerability':'#f39c12'};
+rN(all.slice(0,6).map((item,i)=>{const tag=tM[i%tM.length];const diff=Math.round((Date.now()-new Date(item.pubDate))/3600000);return{title:item.title,source:item.author||new URL(item.link).hostname,time:diff<24?`منذ ${diff} ساعة`:`منذ ${Math.round(diff/24)} يوم`,tag,color:cM[tag]||'#00ff88',link:item.link};}));}
 renderAll();fetchRealNews();setInterval(fetchRealNews,5*60*1000);
 </script>
 </body>
